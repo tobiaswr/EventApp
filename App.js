@@ -5,13 +5,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View>
-        <NavigationBar 
-          title={'Main title'}
-          height={50}
-          leftButtonTitle={'back'}
-          rightButtonTitle={'forward'}
-        />
-        <Text>ABC</Text>
+        
       </View>
     );
   }
