@@ -29,8 +29,8 @@ export default createBottomTabNavigator({
 }, 
 
 {
-  navigationOptions: ({ navigation }) => ({
-
+  navigationOptions: ({ navigation, color }) => ({
+    
     tabBarIcon: ({ focused, tintColor }) => {
 
       const { routeName } = navigation.state;
@@ -49,6 +49,7 @@ export default createBottomTabNavigator({
   tabBarOptions: {
     activeTintColor: '#007AFF',
     inactiveTintColor: 'gray',
-    showLabel: false,    
+    showLabel: false,
+    color: '#91A3B0',    
   }  
 });
