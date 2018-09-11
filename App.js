@@ -8,7 +8,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen},
+  Home: { screen: HomeScreen}, 
   Details: { screen: DetailsScreen},
 });
 
