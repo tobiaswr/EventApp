@@ -7,7 +7,7 @@ export default class HomeScreen extends React.Component {
   };
   render(){
       return(
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'stretch'}}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Text>Home!</Text>
             <Button
             title='Go to details'
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 });
