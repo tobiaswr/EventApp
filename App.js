@@ -34,11 +34,11 @@ export default createBottomTabNavigator({
       } else if(routeName === 'Settings'){
         iconName = 'md-cog';
       }
-      return <Ionicons name = {iconName} size = {20} color = {tintColor} />;
+      return <Ionicons name = {iconName} size = {25} color = {tintColor} />;
     }
   }), 
   tabBarOptions: {
-    activateTintColor: 'tomato',
+    activeTintColor: 'tomato',
     inactiveTintColor: 'gray',    
   }  
 });
