@@ -47,9 +47,11 @@ export default createBottomTabNavigator({
     }
   }), 
   tabBarOptions: {
-    activeTintColor: '#007AFF',
-    inactiveTintColor: 'gray',
+    activeTintColor: 'white',
+    inactiveTintColor: '#8F8FA8',
     showLabel: false,
-    color: '#91A3B0',    
+    style: {
+      backgroundColor: '#3F3F54'
+    }    
   }  
 });
