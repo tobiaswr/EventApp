@@ -1,22 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, ListView, ScrollView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Quickevent',
     headerTitleStyle: {
       fontSize: 18,
    },
    headerStyle: {
-      backgroundColor: '#3F3F54',
-      borderBottomColor: '#282828',
+      backgroundColor: '#ff0000',
+      borderBottomColor: 'black',
        borderBottomWidth: 0,
    },
    headerTintColor: 'white',
     headerRight: ( 
       <View style={{flex: 1, paddingRight: 12, alignItems: 'center', justifyContent: 'center'}}>
-        <Ionicons name = 'md-create' size= {25} color='#8F8FA8'
+        <Ionicons name = 'md-create' size= {25} color='#d8d8d8'
         onPress ={() => Alert.alert(
           '',
           'What would you like to invite to?',
@@ -33,15 +33,10 @@ export default class HomeScreen extends React.Component {
 };
   render(){
       return(
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-
-            <Text>Home!</Text>
-            <Button
-            title='Go to details'
-            onPress={() => this.props.navigation.navigate('Details')}
-            />
-          </View>
-      );
+        <View style={{flex: 1}}>
+            <Text>Hei</Text>
+        </View>
+      )
   }
 
 }

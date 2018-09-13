@@ -7,6 +7,9 @@ import ProfileScreen from './components/pages/ProfileScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
+var bgColor = '#606075';
+var navColor = '#3F3F54';
+
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen}, 
   Details: { screen: DetailsScreen},
@@ -47,11 +50,14 @@ export default createBottomTabNavigator({
     }
   }), 
   tabBarOptions: {
-    activeTintColor: 'white',
-    inactiveTintColor: '#8F8FA8',
+    activeTintColor: '#ff0000',
+    inactiveTintColor: 'white',
     showLabel: false,
     style: {
-      backgroundColor: '#3F3F54'
+      backgroundColor: '#e9e9ef',
+      borderTopColor: 'white',
+      borderTopWidth: 2
+  
     }    
   }  
 });
