@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert, ListView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground} from 'react-native';
+
+import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
 import {Ionicons} from '@expo/vector-icons';
 
 export default class HomeScreen extends React.Component {
@@ -34,10 +36,18 @@ export default class HomeScreen extends React.Component {
   render(){
       return(
         <View>
-          <ScrollView>
-            <DataView>
-              
-            </DataView>
+          <ScrollView style={{height: '100%', position: 'relative'}}>
+
+              <Header style={{height:70, width: '100%', position:'absolute'}}>
+                <Left style={{flex: 1, alignItems: 'flex-start', paddingBottom:45, width: 70}}>
+                
+                <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={styles.image} ></ImageBackground>
+                </Left>
+                <Text style ={{fontSize:18,fontWeight:'500', height:'100%', position:'absolute', paddingTop:15, paddingRight:70}}>Tobias Rognstad</Text>
+                <Text style={{width:'80%',paddingLeft:7}}>Down på å se film hos meg i kveld?</Text>
+              </Header>
+           
           </ScrollView>
         </View>
       )
@@ -56,5 +66,9 @@ const styles = StyleSheet.create({
   event: {
     backgroundColor: '#3c4f3b',
     
+  },
+  image: {
+    width: 70,
+    height: 70,
   }
 });
