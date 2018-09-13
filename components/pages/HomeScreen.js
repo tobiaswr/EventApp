@@ -9,9 +9,9 @@ export default class HomeScreen extends React.Component {
       fontSize: 18,
    },
    headerStyle: {
-      backgroundColor: '#ff0000',
-      borderBottomColor: 'black',
-       borderBottomWidth: 0,
+      backgroundColor: '#22561e',
+      borderBottomColor: '#143311',
+       borderBottomWidth: 1.5
    },
    headerTintColor: 'white',
     headerRight: ( 
@@ -33,8 +33,12 @@ export default class HomeScreen extends React.Component {
 };
   render(){
       return(
-        <View style={{flex: 1}}>
-            <Text>Hei</Text>
+        <View>
+          <ScrollView>
+            <DataView>
+              
+            </DataView>
+          </ScrollView>
         </View>
       )
   }
@@ -49,4 +53,8 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  event: {
+    backgroundColor: '#3c4f3b',
+    
+  }
 });

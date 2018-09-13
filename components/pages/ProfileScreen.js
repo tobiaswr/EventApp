@@ -11,8 +11,8 @@ export default class DetailsScreen extends React.Component {
             fontSize: 18,
          },
          headerStyle: {
-            backgroundColor: '#ff0000',
-            borderBottomColor: '#282828',
+            backgroundColor: '#22561e',
+            borderBottomColor: '#143311',
              borderBottomWidth: 0,
          },
          headerTintColor: 'white'
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         flex: 1,
-        backgroundColor: 'rgba(0, 122, 255, .1)',
     },
     mainBox: {
         width: '100%',
