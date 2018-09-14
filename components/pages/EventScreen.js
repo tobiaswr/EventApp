@@ -11,10 +11,16 @@ export default class EventScreen extends React.Component {
         ),
          headerStyle: {
             backgroundColor: '#22561e',
-            borderBottomColor: '#143311',
-             borderBottomWidth: 1.5            
+            shadowRadius: 4, 
+            shadowOpacity:0.7, 
+            shadowOffset: {
+              width: 1, 
+              height: 0   
+            }      
          },
-         headerTintColor:'#d8d8d8'
+         headerTintColor:'#d8d8d8',
+         shadowColor: '#000000', 
+         elevation: 4,
     };
 
     render() {
