@@ -56,9 +56,9 @@ export default class HomeScreen extends React.Component {
 
     renderRow(rowData, sectionID, rowID) {
       return (
-        <View style={{backgroundColor: 'white'}}>
+        <View style={{alignItems:'center', paddingTop:8}}>
         <TouchableHighlight onPress = {() => {this.props.navigation.navigate('Events', {rowData})}}>
-          <View style={{height: 70, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
+          <View style={{height: 70, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
           <View style={{flex: 1, alignItems: 'flex-start', paddingTop:5, width: 70}}>
           <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
             style={styles.image} ></ImageBackground>
@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
       return(
         <View>
           <ScrollView style={{height: '100%', position: 'relative'}}>
-           <ListView dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}></ListView>
+           <ListView style={{paddingBottom:3}} dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}></ListView>
           </ScrollView>
         </View>
       )
