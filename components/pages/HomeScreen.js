@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground} from 'react-native';
 
 import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
-import {Ionicons} from '@expo/vector-icons';
+import {Ionicons, FontAwesome} from '@expo/vector-icons';
 
 var eventArray = ["Down på å se film hos meg ikveld?", "Raclette hos meg idag?", "Noen som game fortnite?", "Hoste vors idag!"];
 
@@ -47,18 +47,17 @@ export default class HomeScreen extends React.Component {
     renderRow(rowData, sectionID, rowID) {
       return (
         <View style={{backgroundColor: 'white'}}>
-          <View style={{height: 90, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
-          <View style={{flex: 1, alignItems: 'flex-start', paddingTop: 10, width: 70}}>
+          <View style={{height: 70, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
+          <View style={{flex: 1, alignItems: 'flex-start', paddingTop: 5, width: 70}}>
           <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
             style={styles.image} ></ImageBackground>
           </View>
-          <View style={{alignItems: 'flex-start', justifyContent: 'center', paddingLeft: 80, paddingBottom: 30}}>
-          <Text style ={{fontSize:22,fontWeight:'500'}}>Tobias Rognstad</Text>
-          <Text style={{fontSize: 17}} numberOfLines={1}>{rowData}</Text>
+          <View style={{alignItems: 'flex-start', justifyContent: 'center', paddingLeft: 65, paddingBottom: 30}}>
+          <Text style ={{fontSize:20,fontWeight:'500'}}>Tobias Rognstad</Text>
+          <Text style={{fontSize: 15}} numberOfLines={1}>{rowData}</Text>
+          <FontAwesome style={{alignItems: 'flex-end'}} name = 'comment-o'></FontAwesome>
           </View>
           </View>
-
-
         </View>
       )
        
@@ -89,7 +88,7 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
   }
 });

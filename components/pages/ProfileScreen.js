@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         flex: 1,
+        backgroundColor: 'white',
+        borderBottomWidth: 1.5,
+        borderBottomColor: '#143311',
     },
     mainBox: {
         width: '100%',
@@ -78,17 +81,13 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white'
+
     },
     rows: {
        flexDirection: 'row',
     },
     icons: {
         paddingRight: 2,
-        color: 'white',
-    },
-    infoText: {
-        color: 'white',
 
     }
     
