@@ -4,8 +4,11 @@ import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, I
 import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
 import {Ionicons, FontAwesome, Entypo} from '@expo/vector-icons';
 
-var eventArray = ["Down på å se film hos meg ikveld?", "Raclette hos meg idag?", "Noen som game fortnite?", "Hoste vors idag!"];
+var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
+'time':'19:00', 'day':'Torsdag', 'comments':[], 'attendees':[], 'decliners':[]}];
 
+var eventObject= {'user':'', 'eventDesc':'Down på film i kveld?', 
+'time':'', 'day':'', 'comments':[], 'attendees':[], 'decliners':[]};
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     headerTitle: (
@@ -14,7 +17,7 @@ export default class HomeScreen extends React.Component {
    headerStyle: {
       backgroundColor: '#22561e',
       borderBottomColor: '#143311',
-       borderBottomWidth: 1.5
+      borderBottomWidth: 1.5
    },
    headerTintColor: 'white',
     headerRight: ( 
@@ -58,25 +61,28 @@ export default class HomeScreen extends React.Component {
             style={styles.image} ></ImageBackground>
           </View>
           <View style={{alignItems: 'flex-start', justifyContent: 'center', paddingLeft: 65, paddingBottom:7}}>
-            <Text style ={{fontSize:18,fontWeight:'500'}}>Martin Sørbø</Text>
-            <Text style={{fontSize: 12}} numberOfLines={1}>{rowData}</Text>
+            <Text style ={{fontSize:18,fontWeight:'500'}}>{rowData.user}</Text>
+            <Text style={{fontSize: 12}} numberOfLines={1}>{rowData.eventDesc}</Text>
             <View style={{flexDirection: 'row', paddingTop:5}}>
               <View style={{ paddingRight: 20, flexDirection:'row'}}>
                 <FontAwesome style={{paddingRight:2, fontSize:11}} name = 'comment-o'></FontAwesome>
-                <Text style={{fontSize:11}}>12</Text> 
+                <Text style={{fontSize:11}}>{rowData.comments.length}</Text> 
               </View>
               <View style={{paddingRight: 15, flexDirection:'row'}}>
-                <Entypo style={{paddingRight:0, fontSize:12}} name='check'></Entypo>
-                <Text style={{fontSize:11}}>20</Text> 
+                <Entypo style={styles.entypoLogo} name='check'></Entypo>
+                <Text style={{fontSize:11}}>{rowData.attendees.length}</Text> 
               </View>
               <View style={{paddingRight: 15, flexDirection:'row'}}>
-                <Entypo style={{paddingRight:0, fontSize:12}} name='circle-with-cross'></Entypo>
-                <Text style={{fontSize:11}}>9</Text>
+                <Entypo style={styles.entypoLogo} name='circle-with-cross'></Entypo>
+                <Text style={{fontSize:11}}>{rowData.decliners.length}</Text>
               </View>
             </View>
           </View>
           <View style={{position: 'absolute', width: '100%'}}>
-            <Entypo style= {{fontSize: 35, position: 'absolute', right: 10, paddingTop: 15}} onPress= {() => this.props.navigation.navigate('Events')} name='chevron-thin-right'></Entypo>
+            <Entypo style= {{fontSize: 35, position: 'absolute', right: 10, paddingTop: 15}} name='chevron-thin-right' 
+            onPress= {() => 
+              this.props.navigation.navigate('Events', {rowData})}>
+            </Entypo>
           </View>
           </View>
         </View>
@@ -111,5 +117,9 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 60,
+  },
+  entypoLogo: {
+    paddingRight:0, 
+    fontSize:12,
   }
 });
