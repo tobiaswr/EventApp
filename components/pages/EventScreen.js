@@ -28,12 +28,12 @@ export default class EventScreen extends React.Component {
             style={{width: 60, height: 60,}} ></ImageBackground>
             </View>
             <View style={{alignItems: 'flex-start', position: 'absolute', paddingLeft: 65, top: 15}}>
-                <Text style ={{fontSize:18,fontWeight:'500'}}>{event.name}</Text>
+                <Text style ={{fontSize:18,fontWeight:'500'}}>{event.user}</Text>
               <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
                 <Entypo style={{paddingRight:0, fontSize:12}} name='check'></Entypo>
-                <Text style={{fontSize:11}}>20</Text> 
+                <Text style={{fontSize:11}}>{event.attendees.length}</Text> 
                 <Entypo style={{paddingRight:0, fontSize:12}} name='circle-with-cross'></Entypo>
-                <Text style={{fontSize:11}}>9</Text>
+                <Text style={{fontSize:11}}>{event.decliners.length}</Text>
               </View>
             </View>
 

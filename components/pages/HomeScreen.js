@@ -5,7 +5,7 @@ import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right,
 import {Ionicons, FontAwesome, Entypo} from '@expo/vector-icons';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
-'time':'19:00', 'day':'Torsdag', 'comments':[], 'attendees':[], 'decliners':[]}];
+'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}];
 
 var eventObject= {'user':'', 'eventDesc':'Down på film i kveld?', 
 'time':'', 'day':'', 'comments':[], 'attendees':[], 'decliners':[]};
