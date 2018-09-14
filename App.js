@@ -2,35 +2,41 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './components/pages/HomeScreen';
 import SettingsScreen from './components/pages/SettingsScreen';
-import DetailsScreen from './components/pages/DetailsScreen';
+import EventScreen from './components/pages/EventScreen';
 import ProfileScreen from './components/pages/ProfileScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 
+var bgColor = '#606075';
+var navColor = '#3F3F54';
+
+var loggedInUser;
+
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen}, 
-  Details: { screen: DetailsScreen},
+  Events: { screen: EventScreen},
 });
 
 const ProfileStack = createStackNavigator({
   Profile: { screen: ProfileScreen},
-  Details: { screen: DetailsScreen},
+  Events: { screen: EventScreen},
 });
 
 const SettingsStack = createStackNavigator({
   Settings: { screen: SettingsScreen},
-  Details: { screen: DetailsScreen},
+  Events: { screen: EventScreen},
 });
 
 export default createBottomTabNavigator({
   Home: { screen: HomeStack},
   Profile: { screen: ProfileStack},
   Settings: { screen: SettingsStack},
-}, 
+},
+
 
 {
-  navigationOptions: ({ navigation }) => ({
-
+  navigationOptions: ({ navigation, color }) => ({
+    
     tabBarIcon: ({ focused, tintColor }) => {
 
       const { routeName } = navigation.state;
@@ -47,8 +53,17 @@ export default createBottomTabNavigator({
     }
   }), 
   tabBarOptions: {
-    activeTintColor: '#007AFF',
-    inactiveTintColor: 'gray',
-    showLabel: false,    
+    activeTintColor: '#22561e',
+    inactiveTintColor: 'white',
+    showLabel: false,
+    style: {
+      backgroundColor: '#e9e7e7',
+      borderTopColor: '#143311',
+      borderTopWidth: 1.2,
+      borderBottomColor: '#143311',
+      borderBottomWidth: 0
+
+  
+    }    
   }  
 });
