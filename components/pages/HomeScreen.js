@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image} from 'react-native';
+import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 
 import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
 import {Ionicons, FontAwesome, Entypo} from '@expo/vector-icons';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
-'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}];
+'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
+{'user':'Martin Sørbø', 'eventDesc':'Game Fortnite i dag eller, bug?', 
+'time':'19:00', 'day':'Fredag', 'comments':[{'user':{},'event':{},'commentText':'Yh'}], 'attendees':[{}], 'decliners':[]}];
 
 var eventObject= {'user':'', 'eventDesc':'Down på film i kveld?', 
 'time':'', 'day':'', 'comments':[], 'attendees':[], 'decliners':[]};
@@ -55,6 +57,7 @@ export default class HomeScreen extends React.Component {
     renderRow(rowData, sectionID, rowID) {
       return (
         <View style={{backgroundColor: 'white'}}>
+        <TouchableHighlight onPress = {() => {this.props.navigation.navigate('Events', {rowData})}}>
           <View style={{height: 70, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
           <View style={{flex: 1, alignItems: 'flex-start', paddingTop:5, width: 70}}>
           <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
@@ -79,12 +82,11 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
           <View style={{position: 'absolute', width: '100%'}}>
-            <Entypo style= {{fontSize: 35, position: 'absolute', right: 10, paddingTop: 15}} name='chevron-thin-right' 
-            onPress= {() => 
-              this.props.navigation.navigate('Events', {rowData})}>
+            <Entypo style= {{fontSize: 35, position: 'absolute', right: 10, paddingTop: 15}} name='chevron-thin-right' >
             </Entypo>
           </View>
           </View>
+          </TouchableHighlight>
         </View>
       )
        
