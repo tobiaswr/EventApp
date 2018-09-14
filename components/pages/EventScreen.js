@@ -63,8 +63,11 @@ export default class EventScreen extends React.Component {
                 </View>
           
             </View>
-            
+                <View style={{position:'absolute', bottom:30, flexDirection:'row', width:'100%', height:50}}>
                 <TextInput placeholder='What would you like to comment?' style={styles.input}></TextInput>
+                <Ionicons name='md-send' style={{fontSize:40, paddingLeft:13, paddingTop:5}} ></Ionicons>
+                </View>
+                <TextInput style={{backgroundColor:'transparent'}}></TextInput>
         </KeyboardAwareScrollView>
         
         )
@@ -78,11 +81,8 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        width:'99%',
-        position:'absolute',
-        bottom:0,
-        alignSelf:'center',
         borderRadius:18,
-        backgroundColor:'white'
-    },
+        backgroundColor:'white',
+        width:'85%',
+    }, 
 });
