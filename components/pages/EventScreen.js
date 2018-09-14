@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, ImageBackground, Image} from 'react-native';
+import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput} from 'react-native';
 
-import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right} from 'native-base';
-import {Ionicons, FontAwesome, Entypo} from '@expo/vector-icons';
+import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Input} from 'native-base';
+import {Ionicons, FontAwesome, Entypo, MaterialIcons} from '@expo/vector-icons';
 
 export default class EventScreen extends React.Component {
     static navigationOptions = {
@@ -27,6 +27,7 @@ export default class EventScreen extends React.Component {
         const { navigation } = this.props;
         const event = navigation.getParam('rowData', '');
         return(
+            <View style={{flex:1}}>
         <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
           <View style={{height: 140, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
             <View style={{flex: 1, alignItems: 'flex-start', paddingTop:5, width: 70}}>
@@ -36,10 +37,14 @@ export default class EventScreen extends React.Component {
             <View style={{alignItems: 'flex-start', position: 'absolute', paddingLeft: 65, top: 15}}>
                 <Text style ={{fontSize:18,fontWeight:'500'}}>{event.user}</Text>
               <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
-                <Entypo style={{paddingRight:0, fontSize:12}} name='check'></Entypo>
+            <View style={{paddingRight:10, flexDirection:'row'}}>
+                <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-available'></MaterialIcons>
                 <Text style={{fontSize:11}}>{event.attendees.length}</Text> 
-                <Entypo style={{paddingRight:0, fontSize:12}} name='circle-with-cross'></Entypo>
+            </View>
+            <View style={{flexDirection:'row'}}>
+                <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-busy'></MaterialIcons>
                 <Text style={{fontSize:11}}>{event.decliners.length}</Text>
+            </View>
               </View>
             </View>
              
@@ -55,6 +60,9 @@ export default class EventScreen extends React.Component {
                 <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross'></Entypo>
             </View>
           </View>
+          
+        </View>
+        <TextInput placeholder='What would you like to comment?' style={{alignSelf:'center', position:'absolute', bottom:10, borderColor: 'black', borderRadius:5}}></TextInput>
         </View>
         )
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 
 import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
-import {Ionicons, FontAwesome, Entypo} from '@expo/vector-icons';
+import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
 'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
@@ -78,11 +78,11 @@ export default class HomeScreen extends React.Component {
                 <Text style={{fontSize:11}}>{rowData.comments.length}</Text> 
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
-                <Entypo style={styles.entypoLogo} name='check'></Entypo>
+                <MaterialIcons style={styles.entypoLogo} name='event-available'></MaterialIcons>
                 <Text style={{fontSize:11}}>{rowData.attendees.length}</Text> 
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
-                <Entypo style={styles.entypoLogo} name='circle-with-cross'></Entypo>
+                <MaterialIcons style={styles.entypoLogo} name='event-busy'></MaterialIcons>
                 <Text style={{fontSize:11}}>{rowData.decliners.length}</Text>
               </View>
             </View>
@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
   },
   entypoLogo: {
     paddingRight:0, 
-    fontSize:12,
+    fontSize:13,
   }
 });
