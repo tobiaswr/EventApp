@@ -18,8 +18,14 @@ export default class HomeScreen extends React.Component {
   ),
    headerStyle: {
       backgroundColor: '#22561e',
-      borderBottomColor: '#143311',
-      borderBottomWidth: 1.5
+      shadowRadius: 4, 
+      shadowOpacity:0.7, 
+      shadowOffset: {
+        width: 1, 
+        height: 0
+      }, 
+      shadowColor: '#000000', 
+      elevation: 4,
    },
    headerTintColor: 'white',
     headerRight: ( 
@@ -71,11 +77,11 @@ export default class HomeScreen extends React.Component {
                 <FontAwesome style={{paddingRight:2, fontSize:11}} name = 'comment-o'></FontAwesome>
                 <Text style={{fontSize:11}}>{rowData.comments.length}</Text> 
               </View>
-              <View style={{paddingRight: 15, flexDirection:'row'}}>
+              <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <Entypo style={styles.entypoLogo} name='check'></Entypo>
                 <Text style={{fontSize:11}}>{rowData.attendees.length}</Text> 
               </View>
-              <View style={{paddingRight: 15, flexDirection:'row'}}>
+              <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <Entypo style={styles.entypoLogo} name='circle-with-cross'></Entypo>
                 <Text style={{fontSize:11}}>{rowData.decliners.length}</Text>
               </View>
@@ -96,7 +102,7 @@ export default class HomeScreen extends React.Component {
       return(
         <View>
           <ScrollView style={{height: '100%', position: 'relative'}}>
-           <ListView style={{paddingBottom:3}} dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}></ListView>
+           <ListView style={{paddingBottom:10}} dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)}></ListView>
           </ScrollView>
         </View>
       )
