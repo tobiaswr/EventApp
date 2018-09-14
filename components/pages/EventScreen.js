@@ -27,8 +27,8 @@ export default class EventScreen extends React.Component {
         const { navigation } = this.props;
         const event = navigation.getParam('rowData', '');
         return(
-        <View style={{backgroundColor: 'white'}}>
-          <View style={{height: 200, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
+        <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+          <View style={{height: 140, width: '100%', borderBottomColor: '#143311', borderBottomWidth: 1.5}}>
             <View style={{flex: 1, alignItems: 'flex-start', paddingTop:5, width: 70}}>
                 <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
             style={{width: 60, height: 60,}} ></ImageBackground>
@@ -42,12 +42,16 @@ export default class EventScreen extends React.Component {
                 <Text style={{fontSize:11}}>{event.decliners.length}</Text>
               </View>
             </View>
+             
+            <View style={{height: 80, justifyContent: 'center'}}>
+                <Text style={{paddingLeft: 5, fontSize: 25}}>{event.eventDesc}</Text>
+            </View>
 
           </View>
 
           <View style={{flexDirection: 'row', position: 'absolute', width: '100%'}}>
             <View style={{position: 'absolute', right: 10, paddingTop: 20, flexDirection: 'row'}}>
-                <Entypo style={{paddingRight: 25, fontSize:35}} name='check'></Entypo>
+                <Entypo style={{paddingRight: 25, fontSize:35}} name='check' onPress = {() => alert('Ready to hang out!')}></Entypo>
                 <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross'></Entypo>
             </View>
           </View>
