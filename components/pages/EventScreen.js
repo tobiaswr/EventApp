@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput} from 'react-native';
+import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, ScrollView} from 'react-native';
 
 import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Input} from 'native-base';
 import {Ionicons, FontAwesome, Entypo, MaterialIcons} from '@expo/vector-icons';
@@ -61,9 +61,40 @@ export default class EventScreen extends React.Component {
                         <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross'></Entypo>
                     </View>
                 </View>
+
+            <View style={{height: 425, flexDirection: 'column'}}>
+            <ScrollView style={{height: '100%', position: 'relative'}}>
+                <View style={{ height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
+                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                </View>
+                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={{paddingTop: 10,top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
+                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                </View>
+                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
+                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                </View>
+                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
+                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                </View>
+                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
+                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
+                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                </View>
+            
+            </ScrollView>
+            </View>
           
             </View>
-                <View style={{position:'absolute', bottom:30, flexDirection:'row', width:'100%', height:50}}>
+                <View style={{position:'absolute', bottom:10, flexDirection:'row', width:'100%', height:50}}>
                 <TextInput placeholder='What would you like to comment?' style={styles.input}></TextInput>
                 <Ionicons name='md-send' style={{fontSize:40, paddingLeft:13, paddingTop:5}} ></Ionicons>
                 </View>
