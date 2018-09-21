@@ -1,7 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
-
-import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Button} from 'native-base';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 

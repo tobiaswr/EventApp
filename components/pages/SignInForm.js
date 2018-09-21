@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import firebase from 'firebase';
-import SignInForm from './SignInForm';
 
 
-export default class SignUpForm extends React.Component{
+
+export default class SignInForm extends React.Component{
     static navigationOptions = {
         headerTitle: (
           <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
@@ -27,9 +27,9 @@ export default class SignUpForm extends React.Component{
             loading: true
         });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(this.onSignUpSuccess.bind(this))
-            .catch(this.onSignUpFailed.bind(this));
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+            .then(this.onSignInSuccess.bind(this))
+            .catch(this.onSignInFailed.bind(this));
     }
 
     onSignUpSuccess() {
@@ -38,7 +38,7 @@ export default class SignUpForm extends React.Component{
             password:'',
             loading: false,
             error:'' });
-            alert("User created successfully");
+            alert("User logged in successfully");
     }
 
     onSignUpFailed(err) {
@@ -82,11 +82,8 @@ export default class SignUpForm extends React.Component{
         }
         return(
             <KeyboardAvoidingView>
-            <Button title='Sign up' onPress={this.onButtonPress.bind(this)} style={styles.button}>
+            <Button title='Sign in' onPress={this.onButtonPress.bind(this)} style={styles.button}>
             </Button>
-
-            <Text>Already a member?</Text>
-            <Button title='Sign in' onPress= {() => {this.props.navigation.navigate(SignInForm)}}></Button>
             </KeyboardAvoidingView>
         );
     }

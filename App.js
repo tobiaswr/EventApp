@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import HomeScreen from './components/pages/HomeScreen';
 import SettingsScreen from './components/pages/SettingsScreen';
 import EventScreen from './components/pages/EventScreen';
@@ -8,6 +8,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import firebase from 'firebase';
 import SignUpForm from './components/pages/SignUpForm';
+
 
 var bgColor = '#606075';
 var navColor = '#3F3F54';
@@ -30,9 +31,11 @@ export default class App extends React.Component{
   }
   render(){
     return(
-      <View style={styles.container}>
-        <SignUpForm />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <SignUpForm />
+        </View>
+        </TouchableWithoutFeedback>
     )
   }
 };
