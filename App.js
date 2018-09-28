@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, ActivityIndicator} from 'react-native';
 import HomeScreen from './components/pages/HomeScreen';
 import SettingsScreen from './components/pages/SettingsScreen';
 import EventScreen from './components/pages/EventScreen';
@@ -8,16 +8,21 @@ import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import firebase from 'firebase';
 import SignUpForm from './components/pages/SignUpForm';
+import SignInForm from './components/pages/SignInForm';
 
 
 var bgColor = '#606075';
 var navColor = '#3F3F54';
 
-var loggedInUser;
+
+
 
 export default class App extends React.Component{
   constructor(props) {
     super(props);
+    this.state = {
+      loggedIn: null
+    }
   }
   componentWillMount(){
     firebase.initializeApp({
@@ -28,15 +33,35 @@ export default class App extends React.Component{
       storageBucket: "eventapp-84264.appspot.com",
       messagingSenderId: "901253678500"
     });
+  
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setState({ loggedIn: true });
+      }
+      else {
+        this.setState({ loggedIn: false});
+      }
+    });
   }
+  
   render(){
-    return(
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    switch (this.state.loggedIn) {
+      case false: 
+      return (
+          <View style={styles.container}>
+            <SignInForm> </SignInForm>                                                                            
+          </View>
+      );
+      case true:
+        return (
         <View style={styles.container}>
-          <SignUpForm />
+          <HomeStack />
         </View>
-        </TouchableWithoutFeedback>
-    )
+        );
+          
+        default:
+          return <ActivityIndicator size="large" />                                  
+    }        
   }
 };
 
@@ -55,7 +80,7 @@ const SettingsStack = createStackNavigator({
   Events: { screen: EventScreen},
 });
 
-const BottomNav = createBottomTabNavigator({
+const bottomNav = createBottomTabNavigator({
   Home: { screen: HomeStack},
   Profile: { screen: ProfileStack},
   Settings: { screen: SettingsStack},
@@ -96,6 +121,7 @@ const BottomNav = createBottomTabNavigator({
   }  
   
 });
+
 
 const styles = StyleSheet.create({
   container: {

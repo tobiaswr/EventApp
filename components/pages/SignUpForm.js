@@ -84,9 +84,6 @@ export default class SignUpForm extends React.Component{
             <KeyboardAvoidingView>
             <Button title='Sign up' onPress={this.onButtonPress.bind(this)} style={styles.button}>
             </Button>
-
-            <Text>Already a member?</Text>
-            <Button title='Sign in' onPress= {() => {this.props.navigation.navigate(SignInForm)}}></Button>
             </KeyboardAvoidingView>
         );
     }

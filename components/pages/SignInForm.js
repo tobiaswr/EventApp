@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import firebase from 'firebase';
+import SignUpForm from './SignUpForm'
 
 
 
@@ -15,8 +16,21 @@ export default class SignInForm extends React.Component{
         this.state = {
             email: '',
             password: '',
-            loading: false
+            loading: false,
+            hasLogin: true
         }
+    }
+
+    setLoginStateFalse(){
+        this.setState({
+            hasLogin: false
+        });
+    }
+
+    setLoginStateTrue(){
+        this.setState({
+            hasLogin: true
+        });
     }
 
     onButtonPress(){
@@ -27,12 +41,12 @@ export default class SignInForm extends React.Component{
             loading: true
         });
 
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
-            .then(this.onSignInSuccess.bind(this))
-            .catch(this.onSignInFailed.bind(this));
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(this.onLoginSuccess.bind(this))
+            .catch(this.onLoginFailed.bind(this));
     }
 
-    onSignUpSuccess() {
+    onLoginSuccess() {
         this.setState({
             email:'',
             password:'',
@@ -41,7 +55,7 @@ export default class SignInForm extends React.Component{
             alert("User logged in successfully");
     }
 
-    onSignUpFailed(err) {
+    onLoginFailed(err) {
         this.setState({
             loading:false,
             error: err.message
@@ -49,7 +63,9 @@ export default class SignInForm extends React.Component{
     }
 
     render() {
-        return (
+        switch (this.state.hasLogin) {
+            case true:
+            return (
             
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled >    
                 <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 200, width:200}}></Image>       
@@ -71,9 +87,19 @@ export default class SignInForm extends React.Component{
                     <Text>{this.state.error}</Text>
 
                 {this.renderButton()}
+                <Button title='Sign up' onPress= {this.setLoginStateFalse.bind(this)}></Button>
             </KeyboardAvoidingView>
             
-        );
+            );
+            case false: 
+            return (
+                <View style={styles.container}>
+                    <SignUpForm></SignUpForm>
+                    <Button title='Go back' onPress={this.setLoginStateTrue.bind(this)}></Button>
+                </View>
+
+            )
+        }
     }
 
     renderButton(){
@@ -82,7 +108,7 @@ export default class SignInForm extends React.Component{
         }
         return(
             <KeyboardAvoidingView>
-            <Button title='Sign in' onPress={this.onButtonPress.bind(this)} style={styles.button}>
+            <Button title='Log in' onPress={this.onButtonPress.bind(this)} style={styles.button}>
             </Button>
             </KeyboardAvoidingView>
         );
