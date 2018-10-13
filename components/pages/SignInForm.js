@@ -3,8 +3,6 @@ import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, Ke
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm'
 
-
-
 export default class SignInForm extends React.Component{
     static navigationOptions = {
         headerTitle: (

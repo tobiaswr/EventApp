@@ -7,7 +7,6 @@ import ProfileScreen from './components/pages/ProfileScreen';
 import {Ionicons} from '@expo/vector-icons';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import firebase from 'firebase';
-import SignUpForm from './components/pages/SignUpForm';
 import SignInForm from './components/pages/SignInForm';
 
 
@@ -55,7 +54,7 @@ export default class App extends React.Component{
       case true:
         return (
         <View style={styles.container}>
-          <HomeStack />
+          <SettingsStack/>
         </View>
         );
           
