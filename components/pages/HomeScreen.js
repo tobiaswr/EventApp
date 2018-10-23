@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
+import CreateEventScreen from './CreateEventScreen';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
 'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
@@ -10,7 +11,8 @@ var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?
 var eventObject= {'user':'', 'eventDesc':'Down på film i kveld?', 
 'time':'', 'day':'', 'comments':[], 'attendees':[], 'decliners':[]};
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
+  
+  static navigationOptions = ({navigation}) => ({
     headerTitle: (
       <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
   ),
@@ -29,16 +31,7 @@ export default class HomeScreen extends React.Component {
     headerRight: ( 
       <View style={{flex: 1, paddingRight: 12, alignItems: 'center', justifyContent: 'center'}}>
         <Ionicons name = 'md-create' size= {25} color='#d8d8d8'
-        onPress ={() => Alert.alert(
-          '',
-          'What would you like to invite to?',
-          [
-            {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'OK', onPress: () => console.log('OK Pressed')},
-          ],
-          { cancelable: false }
-        )}
+        onPress ={() => {navigation.navigate('CreateEvent')}}
         />
       </View>
       ),
@@ -48,7 +41,8 @@ export default class HomeScreen extends React.Component {
         />
       </View>
       ),
-};
+});
+
 
   constructor(props) {
     super(props);
@@ -106,7 +100,10 @@ export default class HomeScreen extends React.Component {
       )
   }
 
+  
+  
 }
+
 
 
 const styles = StyleSheet.create({

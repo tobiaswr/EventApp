@@ -29,6 +29,7 @@
     "react-native-prompt": "^1.0.0",
     "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^2.12.1",
-    "rn-sliding-up-panel": "^1.2.1"
+    "rn-sliding-up-panel": "^1.2.1",
+    "tcomb-form-native": "^0.6.20"
   }
 }
