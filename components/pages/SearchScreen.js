@@ -1,19 +1,45 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, ImageBackground} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import {StyleSheet, Text, View, Button, ImageBackground, TextInput} from 'react-native';
+import {Ionicons, MaterialIcons} from '@expo/vector-icons';
+import {Font} from 'expo'
+import { SearchBar } from 'react-native-elements';
 
 var bgColor = this.backgColor;
+Font.loadAsync({ 'Material Icons': require('@expo/vector-icons/fonts/MaterialIcons.ttf') })
+Font.loadAsync({ 'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf') })
+
 
 export default class DetailsScreen extends React.Component {
+
+
     static navigationOptions = {
-        title: "Profile",
-        headerTitleStyle: {
-            fontSize: 18,
-         },
-         headerStyle: {
+        headerTitle: 
+        <View style={{width: '80%', backgroundColor: '#22561e'}}>
+            <SearchBar 
+            platform= "ios"
+            value=''
+            containerStyle={{backgroundColor: '#22561e', 
+            borderTopColor: '#22561e', 
+            borderBottomColor: '#22561e'}} 
+            clearIcon={true} 
+            placeholder='Search' 
+            cancelButtonTitle='Cancel' 
+            round
+            
+            />
+        </View>
+        ,
+        headerStyle: {
             backgroundColor: '#22561e',
-            borderBottomColor: '#143311',
-             borderBottomWidth: 0,
+            shadowRadius: 4, 
+            shadowOpacity:0.7, 
+            shadowOffset: {
+              width: 1, 
+              height: 0
+            }, 
+            height: 75,
+            shadowColor: '#000000', 
+            elevation: 4,
          },
          headerTintColor: 'white'
     };
@@ -21,74 +47,7 @@ export default class DetailsScreen extends React.Component {
     render() {
         return(
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            
-                <View style={styles.topBox}>
-                    <View style={styles.imageContainer}>
-                        <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={styles.image} ></ImageBackground>
-                    </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.name}>Name</Text>
-                        <View style={styles.rows}>
-                            <Ionicons name = 'md-at' size = {15} style= {styles.icons}></Ionicons>
-                            <Text style={styles.infoText}>Username</Text>
-                        </View>
-                        <View style={styles.rows}>
-                            <Ionicons name = 'md-compass' size = {15} style= {styles.icons}></Ionicons>                                       
-                            <Text style={styles.infoText}>Location</Text>
-                        </View> 
-                    </View>
-                </View>
-                <View style={styles.mainBox}>
-
-                </View>
             </View>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    topBox: {
-        width: '100%',
-        alignItems: 'center',
-        flex: 1,
-        backgroundColor: 'white',
-        borderBottomWidth: 1.5,
-        borderBottomColor: '#143311',
-    },
-    mainBox: {
-        width: '100%',
-        height: 385,
-    },
-    image: {
-        width: 100,
-        height: 100,
-
-    },
-    imageContainer: {
-        position: 'absolute',
-        left: 0, 
-        paddingLeft: 20,
-        paddingTop: 20,
-    },
-    infoContainer: {
-        position: 'absolute',
-        left: 0,
-        paddingLeft: 20,
-        paddingTop: 130,
-        flexDirection: 'column',
-    },
-    name: {
-        fontSize: 20,
-        fontWeight: 'bold',
-
-    },
-    rows: {
-       flexDirection: 'row',
-    },
-    icons: {
-        paddingRight: 2,
-
-    }
-    
-});
