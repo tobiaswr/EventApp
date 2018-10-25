@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
-import CreateEventScreen from './CreateEventScreen';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
 'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
