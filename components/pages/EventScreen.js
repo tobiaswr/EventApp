@@ -57,33 +57,19 @@ export default class EventScreen extends React.Component {
 
                 <View style={{flexDirection: 'row', position: 'absolute', width: '100%'}}>
                     <View style={{position: 'absolute', right: 10, paddingTop: 20, flexDirection: 'row'}}>
-                        <Entypo style={{paddingRight: 25, fontSize:35}} name='check' onPress = {() => alert('Ready to hang out!')}></Entypo>
-                        <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross'></Entypo>
+                        <Entypo style={{paddingRight: 25, fontSize:35}} name='check' onPress = {() =>
+                            {event.attendees.length++
+                            this.setState({dummy: 1})
+                            alert('Ready to hang out!')}}></Entypo>
+                        <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross' onPress = {() => 
+                            {event.decliners.length++
+                            this.setState({dummy: 1})
+                            alert('You have chosen not to attend')}}></Entypo>
                     </View>
                 </View>
                 <View style={{height: 425, flexDirection: 'column'}}>
                     <ScrollView style={{height: '100%', position: 'relative'}}>
                 <View style={{ height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
-                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
-                </View>
-                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={{paddingTop: 10,top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
-                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
-                </View>
-                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
-                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
-                </View>
-                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
-                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
-                </View>
-                <View style={{height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
                     <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
                         style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
                     <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>

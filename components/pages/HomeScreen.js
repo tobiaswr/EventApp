@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
+import firebase from 'firebase';
 
 var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
 'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
@@ -42,6 +43,16 @@ export default class HomeScreen extends React.Component {
       ),
 });
 
+getEventsFromApiAsync(){
+  var that = this;
+  return firebase.database().ref('events').on('value', function (snapshot) {
+    eventArray = Object.values(snapshot.val());
+    that.setState({
+      isLoading: false,
+      dataSource: events,
+    });
+  });
+}
 
   constructor(props) {
     super(props);
@@ -97,13 +108,10 @@ export default class HomeScreen extends React.Component {
           </ScrollView>
         </View>
       )
+      
   }
-
-  
   
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
