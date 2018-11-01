@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, ScrollView} from 'react-native';
 
-import {Container, Header, Left, Body, Content, Footer, FooterTab, Title, Right, Input} from 'native-base';
 import {Ionicons, FontAwesome, Entypo, MaterialIcons} from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 

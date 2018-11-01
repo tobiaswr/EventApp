@@ -43,9 +43,9 @@ export default class CreateEventScreen extends Component {
   }
 
   writeEvent(){
-    const attendees = [];
-    const decliners = [];
-    const comments = [];
+    const attendees = [{}];
+    const decliners = [{}];
+    const comments = [{}];
     const month = this.state.chosenDate.getMonth()+1;
     let minutes = 0;
     if (this.state.chosenDate.getMinutes() < 10){
