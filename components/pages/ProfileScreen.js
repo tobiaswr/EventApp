@@ -2,7 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, View, Button, ImageBackground} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
+
 var bgColor = this.backgColor;
+
 
 export default class DetailsScreen extends React.Component {
     static navigationOptions = {
@@ -24,6 +26,7 @@ export default class DetailsScreen extends React.Component {
             
                 <View style={styles.topBox}>
                     <View style={styles.imageContainer}>
+
                         <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
                         style={styles.image} ></ImageBackground>
                     </View>
@@ -38,6 +41,7 @@ export default class DetailsScreen extends React.Component {
                             <Text style={styles.infoText}>Location</Text>
                         </View> 
                     </View>
+
                 </View>
                 <View style={styles.mainBox}>
 
@@ -55,6 +59,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 1.5,
         borderBottomColor: '#143311',
+
     },
     mainBox: {
         width: '100%',
@@ -82,12 +87,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
 
+
     },
     rows: {
        flexDirection: 'row',
     },
     icons: {
         paddingRight: 2,
+
 
     }
     

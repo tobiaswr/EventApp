@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator} from 'react-native';
 import firebase from 'firebase';
 import SignInForm from './components/pages/SignInForm';
 import Home from './Home';
+
 
 var bgColor = '#606075';
 var navColor = '#3F3F54';
