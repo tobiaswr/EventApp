@@ -3,15 +3,11 @@ import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, I
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 import firebase from 'firebase';
 
-var eventArray = [{'user':'Tobias Rognstad', 'eventDesc':'Down på film i kveld?', 
-'time':'19:00', 'day':'Torsdag', 'comments':[{'user':{},'event':{},'commentText':'Seian'}], 'attendees':[], 'decliners':[]}, 
-{'user':'Martin Sørbø', 'eventDesc':'Game Fortnite i dag eller, bug?', 
-'time':'19:00', 'day':'Fredag', 'comments':[{'user':{},'event':{},'commentText':'Yh'}], 'attendees':[{}], 'decliners':[]}];
 
-var eventObject= {'user':'', 'eventDesc':'Down på film i kveld?', 
-'time':'', 'day':'', 'comments':[], 'attendees':[], 'decliners':[]};
 export default class HomeScreen extends React.Component {
   
+  
+
   static navigationOptions = ({navigation}) => ({
     headerTitle: (
       <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
@@ -37,31 +33,37 @@ export default class HomeScreen extends React.Component {
       ),
       headerLeft: (
         <View style={{flex: 1,paddingLeft:12, alignItems: 'center', justifyContent: 'center'}}>
-        <Ionicons name = 'md-menu' size= {28} color='#d8d8d8'
-        />
-      </View>
+        <Ionicons name = 'md-menu' size= {28} color='#d8d8d8'/>
+        </View>
       ),
-});
-
-getEventsFromApiAsync(){
-  var that = this;
-  return firebase.database().ref('events').on('value', function (snapshot) {
-    eventArray = Object.values(snapshot.val());
-    that.setState({
-      isLoading: false,
-      dataSource: events,
-    });
   });
-}
 
   constructor(props) {
     super(props);
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.guid != r2.guid});
     this.state = {
-      dataSource: dataSource.cloneWithRows(eventArray)
-    }
+      dataSource: dataSource.cloneWithRows(firebase.database().ref('events/').once('value', function (snapshot){
+        events = Object.values(snapshot.val());
+        console.log(events);
+      }))
+      }
   }
 
+ /* getEventsFromApiAsync(){
+    var that = this;
+    return JSON.stringify(firebase.database().ref('events/').on('value', function (snapshot) {
+      events = Object.values(snapshot.val());
+      console.log(events);
+      that.setState({
+        isLoading: false,
+        dataSource: events,
+      });
+    }));
+    
+  }*/
+
+  
+    
     renderRow(rowData, sectionID, rowID) {
       return (
         <View style={{alignItems:'center', paddingTop:8}}>
@@ -72,20 +74,20 @@ getEventsFromApiAsync(){
             style={styles.image} ></ImageBackground>
           </View>
           <View style={{alignItems: 'flex-start', justifyContent: 'center', paddingLeft: 65, paddingBottom:7}}>
-            <Text style ={{fontSize:18,fontWeight:'500'}}>{rowData.user}</Text>
+            <Text style ={{fontSize:18,fontWeight:'500'}}>{}</Text>
             <Text style={{fontSize: 12}} numberOfLines={1}>{rowData.eventDesc}</Text>
             <View style={{flexDirection: 'row', paddingTop:5}}>
               <View style={{ paddingRight: 20, flexDirection:'row'}}>
                 <FontAwesome style={{paddingRight:2, fontSize:11}} name = 'comment-o'></FontAwesome>
-                <Text style={{fontSize:11}}>{rowData.comments.length}</Text> 
+                <Text style={{fontSize:11}}>{}</Text> 
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <MaterialIcons style={styles.entypoLogo} name='event-available'></MaterialIcons>
-                <Text style={{fontSize:11}}>{rowData.attendees.length}</Text> 
+                <Text style={{fontSize:11}}>{}</Text> 
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <MaterialIcons style={styles.entypoLogo} name='event-busy'></MaterialIcons>
-                <Text style={{fontSize:11}}>{rowData.decliners.length}</Text>
+                <Text style={{fontSize:11}}>{}</Text>
               </View>
             </View>
           </View>
