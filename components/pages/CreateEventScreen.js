@@ -54,9 +54,16 @@ export default class CreateEventScreen extends Component {
     else{
       minutes = this.state.chosenDate.getMinutes();
     }
+    let hours = 0;
+    if (this.state.chosenDate.getHours()<10){
+      hours = '0' + this.state.chosenDate.getHours();
+    }
+    else{
+      hours = this.state.chosenDate.getHours();
+    }
     const eventDesc = this.state.eventDesc;
     const eventDate = this.state.chosenDate.getDate() + '/' + month;
-    const eventTime = this.state.chosenDate.getHours() + ':' + minutes;
+    const eventTime = hours + ':' + minutes;
     
 
     firebase.database().ref('events/').push({

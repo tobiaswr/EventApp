@@ -6,7 +6,11 @@ import firebase from 'firebase';
 
 export default class HomeScreen extends React.Component {
   
-  
+  componentWillMount() {
+    firebase.database().ref('events/').on('value', function(data) {
+        this.setState({ events: data.val() });
+    });
+  }
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: (
@@ -42,25 +46,27 @@ export default class HomeScreen extends React.Component {
     super(props);
     var dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.guid != r2.guid});
     this.state = {
-      dataSource: dataSource.cloneWithRows(firebase.database().ref('events/').once('value', function (snapshot){
+      events: [],
+      dataSource: events.cloneWithRows(firebase.database().ref('events/').once('value', function (snapshot){
         events = Object.values(snapshot.val());
         console.log(events);
       }))
+      
       }
   }
 
- /* getEventsFromApiAsync(){
+ getEventsFromApiAsync(){
     var that = this;
     return JSON.stringify(firebase.database().ref('events/').on('value', function (snapshot) {
       events = Object.values(snapshot.val());
       console.log(events);
       that.setState({
         isLoading: false,
-        dataSource: events,
+        events: events,
       });
     }));
     
-  }*/
+  }
 
   
     
