@@ -20,13 +20,18 @@
   },
   "dependencies": {
     "expo": "^27.0.1",
+    "firebase": "^5.5.1",
     "native-base": "^2.8.0",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-elements": "^1.0.0-beta7",
+    "react-native-keyboard-aware-scroll-view": "^0.7.2",
     "react-native-navigation-bar": "^0.2.1",
     "react-native-prompt": "^1.0.0",
+    "react-native-search-bar": "^3.4.2",
     "react-native-vector-icons": "^5.0.0",
     "react-navigation": "^2.12.1",
-    "rn-sliding-up-panel": "^1.2.1"
+    "rn-sliding-up-panel": "^1.2.1",
+    "tcomb-form-native": "^0.6.20"
   }
 }
