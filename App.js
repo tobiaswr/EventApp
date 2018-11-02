@@ -1,57 +1,68 @@
+
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './components/pages/HomeScreen';
-import SettingsScreen from './components/pages/SettingsScreen';
-import DetailsScreen from './components/pages/DetailsScreen';
-import ProfileScreen from './components/pages/ProfileScreen';
-import {Ionicons} from '@expo/vector-icons';
-import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
+import { StyleSheet, View, ActivityIndicator} from 'react-native';
+import firebase from 'firebase';
+import SignInForm from './components/pages/SignInForm';
+import Home from './Home';
 
-const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen}, 
-  Details: { screen: DetailsScreen},
-});
 
-const ProfileStack = createStackNavigator({
-  Profile: { screen: ProfileScreen},
-  Details: { screen: DetailsScreen},
-});
+var bgColor = '#606075';
+var navColor = '#3F3F54';
 
-const SettingsStack = createStackNavigator({
-  Settings: { screen: SettingsScreen},
-  Details: { screen: DetailsScreen},
-});
-
-export default createBottomTabNavigator({
-  Home: { screen: HomeStack},
-  Profile: { screen: ProfileStack},
-  Settings: { screen: SettingsStack},
-}, 
-
-{
-  navigationOptions: ({ navigation, color }) => ({
-    
-    tabBarIcon: ({ focused, tintColor }) => {
-
-      const { routeName } = navigation.state;
-      var iconName;
-
-      if (routeName === 'Home') {
-        iconName = 'md-home';
-      } else if(routeName === 'Settings'){
-        iconName = 'md-cog';
-      } else if (routeName === 'Profile'){
-        iconName = 'md-person';
-      }
-      return <Ionicons name = {iconName} size = {25} color = {tintColor} />;
+export default class App extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: null
     }
-  }), 
-  tabBarOptions: {
-    activeTintColor: 'white',
-    inactiveTintColor: '#8F8FA8',
-    showLabel: false,
-    style: {
-      backgroundColor: '#3F3F54'
-    }    
-  }  
+  }
+  componentWillMount(){
+    firebase.initializeApp({
+      apiKey: "AIzaSyDSw2vJ98OAa3awMwy2CnTn4jcXe-bxpYk",
+      authDomain: "eventapp-84264.firebaseapp.com",
+      databaseURL: "https://eventapp-84264.firebaseio.com",
+      projectId: "eventapp-84264",
+      storageBucket: "eventapp-84264.appspot.com",
+      messagingSenderId: "901253678500"
+    });
+  
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setState({ loggedIn: true });
+        
+      }
+      else {
+        this.setState({ loggedIn: false});
+      }
+    });
+  }
+  
+  render(){
+    switch (this.state.loggedIn) {
+      case false: 
+      return (
+          <View style={styles.container}>
+            <SignInForm> </SignInForm>                                                                            
+          </View>
+      );
+      case true:
+        return (
+        <View style={styles.container}>
+          <Home/>
+        </View>
+        );
+          
+        default:
+          return <ActivityIndicator size="large" />                                  
+    }        
+  }
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+  },
 });
