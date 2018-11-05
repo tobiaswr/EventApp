@@ -52,8 +52,15 @@ export default class HomeScreen extends Component {
     componentDidMount() {
         firebase.database().ref('/events').on('value', (snapshot) => {
             let data = snapshot.val();
+            let eventkeys = Object.keys(data);
             let events = Object.values(data);
+            let i = 0;
+            events.forEach(event => {
+              event.id = eventkeys[i];
+              i++;
+            })
             this.setState({events});
+            console.log(events);
          });
     }
 

@@ -15,29 +15,38 @@ export default class SignUpForm extends React.Component{
         this.state = {
             email: '',
             password: '',
+            username:'',
             loading: false
         }
     }
 
     onButtonPress(){
-        const {email, password} = this.state;
+        const {email, password, username} = this.state;
 
         this.setState({
             error:'',
             loading: true
         });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+        firebase.auth().createUserWithEmailAndPassword(email, password, username)
             .then(this.onSignUpSuccess.bind(this))
             .catch(this.onSignUpFailed.bind(this));
     }
 
     onSignUpSuccess() {
+        let uid = firebase.auth().currentUser.uid;
+        let username = this.state.username;
+        firebase.database().ref('users/').push({
+            username,
+            uid,
+        });
         this.setState({
             email:'',
             password:'',
+            username:'',
             loading: false,
             error:'' });
+            
             alert("User created successfully");
     }
 
@@ -55,7 +64,7 @@ export default class SignUpForm extends React.Component{
                 <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 200, width:200}}></Image>       
                     <TextInput 
                     style={styles.input}
-                    label='Username'
+                    label='E-mail'
                     placeholder='user@gmail.com'
                     value={this.state.email}
                     onChangeText={email => this.setState({email})}></TextInput>
@@ -67,6 +76,14 @@ export default class SignUpForm extends React.Component{
                     placeholder='password'
                     value={this.state.password}
                     onChangeText={password => this.setState({password})}></TextInput>
+                    
+                    <TextInput 
+                    style={styles.input}
+                    label='username'
+                    secureTextEntry={true}
+                    placeholder='username'
+                    value={this.state.username}
+                    onChangeText={username => this.setState({username})}></TextInput>
 
                     <Text>{this.state.error}</Text>
 

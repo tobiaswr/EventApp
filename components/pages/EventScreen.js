@@ -1,8 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, ScrollView, FlatList} from 'react-native';
+import {ListItem} from 'react-native-elements';
 
 import {Ionicons, FontAwesome, Entypo, MaterialIcons} from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import firebase from 'firebase'
 
 export default class EventScreen extends React.Component {
     static navigationOptions = {
@@ -23,9 +25,23 @@ export default class EventScreen extends React.Component {
          elevation: 4,
     };
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            commentText: '',
+            owner: firebase.auth().currentUser.uid,
+            event: null,
+            index: null,
+        }
+    }    
+
     render() {
         const { navigation } = this.props;
         const event = navigation.getParam('event', '');
+        const index = event.key;
+        this.state.event = event;
+        this.state.index = index;
+        const comments = event.comments;
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
             <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
@@ -66,27 +82,56 @@ export default class EventScreen extends React.Component {
                             alert('You have chosen not to attend')}}></Entypo>
                     </View>
                 </View>
-                <View style={{height: 425, flexDirection: 'column'}}>
+                <View style={{height: '100%', flexDirection: 'column'}}>
                     <ScrollView style={{height: '100%', position: 'relative'}}>
-                <View style={{ height: 55, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-                    <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={{top: 12, left: 8, width: 30, height: 30,}} ></ImageBackground>
-                    <Text style={{position: "absolute", left: 80, top: 20}}>Seian</Text>
+                        <FlatList style={{ height: '100%', width: '100%', backgroundColor:'transparent', borderBottomColor:'grey', borderBottomWidth:0.3}}
+                        data={comments}
+                        renderItem={({item}) => <ListItem style={styles.listItem} 
+                        title={item.owner}
+                        subtitle={item.commentText}
+                        leftAvatar={{source: {uri: 'https://static.thenounproject.com/png/363633-200.png'}}}
+                            
+                        > </ListItem>}
+                        /> 
+                        
+                      
+                    </ScrollView>
                 </View>
-            
-            </ScrollView>
             </View>
-            </View>
-                <View style={{position:'absolute', bottom:30, flexDirection:'row', width:'100%', height:50}}>
-                <TextInput placeholder='What would you like to comment?' style={styles.input}></TextInput>
-                <Ionicons name='md-send' style={{fontSize:40, paddingLeft:13, paddingTop:5}} ></Ionicons>
+                <View style={{position:'absolute', bottom:0, flexDirection:'row', width:'100%', height: 55, backgroundColor: 'white', borderTopWidth: 1, borderTopColor: 'grey',}}>
+                <TextInput placeholder='What would you like to comment?' style={styles.input} value = {this.state.commentText} onChangeText={commentText => this.setState({commentText})}></TextInput>
+                
+                <View style={{marginTop:7}}>
+                <Button title = 'Post' onPress ={() => {this.postComment()}} ></Button>
                 </View>
-                <TextInput style={{backgroundColor:'transparent'}}></TextInput>
+                </View>
         </KeyboardAwareScrollView>
         
         )
     }
+
+    postComment(){
+        const {commentText} = this.state;
+        const owner = this.state.owner;
+        
+        this.setState({
+            error:'',
+            loading: true
+        });
+
+        firebase.database().ref('/events/' + this.state.event.id + '/comments/').push({
+            owner,
+            commentText
+        }).then((data)=>{
+            alert('Comment created successfully');
+          }).catch((error)=>{
+            //error callback
+            console.log('error', error)
+          })
+    }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -95,8 +140,14 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        borderRadius:18,
         backgroundColor:'white',
         width:'85%',
-    }, 
+        marginTop: 2,
+    },
+    listItem: {
+        width: '100%', 
+        backgroundColor:'transparent', 
+        borderTopColor:'grey', 
+        borderTopWidth: 0.3,
+    } 
 });

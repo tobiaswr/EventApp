@@ -44,7 +44,7 @@ export default class CreateEventScreen extends Component {
 
   writeEvent(){
     const decliners = ['None'];
-    const comments = [0];
+    const comments = [{'owner':'tobiaswr', 'commentText':'jamann'}];
     let owner = firebase.auth().currentUser.uid;
     const attendees = [owner];
     const month = this.state.chosenDate.getMonth()+1;
