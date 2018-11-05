@@ -25,7 +25,7 @@ export default class EventScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const event = navigation.getParam('rowData', '');
+        const event = navigation.getParam('event', '');
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
             <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
@@ -39,11 +39,11 @@ export default class EventScreen extends React.Component {
                         <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
                             <View style={{paddingRight:10, flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-available'></MaterialIcons>
-                                <Text style={{fontSize:11}}>{event.attendees.length}</Text> 
+                                <Text style={{fontSize:11}}>1</Text> 
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-busy'></MaterialIcons>
-                                <Text style={{fontSize:11}}>{event.decliners.length}</Text>
+                                <Text style={{fontSize:11}}>1</Text>
                             </View>
                         </View>
                     </View>

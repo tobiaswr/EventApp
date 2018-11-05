@@ -56,15 +56,16 @@ export default class HomeScreen extends Component {
             this.setState({events});
          });
     }
-    
+
     render() {
         return (
             <View style={styles.container}>
-                {
-                  <ScrollView>
-                    ? <ItemComponent events={this.state.events} style ={{paddingTop:0}}/>
-                  </ScrollView>
-                }
+            {
+                <ScrollView>               
+                    ? <ItemComponent navigation={this.props.navigation} events={this.state.events} style ={{paddingTop:0}} />  
+                </ScrollView>
+            }
+                
             </View>
         )
     }
