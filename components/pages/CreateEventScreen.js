@@ -43,9 +43,10 @@ export default class CreateEventScreen extends Component {
   }
 
   writeEvent(){
-    const attendees = [{}];
-    const decliners = [{}];
-    const comments = [{}];
+    const decliners = ['None'];
+    const comments = [0];
+    let owner = firebase.auth().currentUser.uid;
+    const attendees = [owner];
     const month = this.state.chosenDate.getMonth()+1;
     let minutes = 0;
     if (this.state.chosenDate.getMinutes() < 10){
@@ -72,7 +73,8 @@ export default class CreateEventScreen extends Component {
       eventTime,
       attendees,
       decliners,
-      comments
+      comments,
+      owner
     }).then((data)=>{
       alert('Event created successfully');
     }).catch((error)=>{
