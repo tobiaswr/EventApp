@@ -28,7 +28,7 @@ export default class SignUpForm extends React.Component{
             loading: true
         });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password, username)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(this.onSignUpSuccess.bind(this))
             .catch(this.onSignUpFailed.bind(this));
     }
@@ -80,7 +80,6 @@ export default class SignUpForm extends React.Component{
                     <TextInput 
                     style={styles.input}
                     label='username'
-                    secureTextEntry={true}
                     placeholder='username'
                     value={this.state.username}
                     onChangeText={username => this.setState({username})}></TextInput>
