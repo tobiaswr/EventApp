@@ -32,16 +32,24 @@ export default class EventScreen extends React.Component {
             owner: firebase.auth().currentUser.uid,
             event: null,
             index: null,
+            comments: null,
         }
     }    
 
     render() {
         const { navigation } = this.props;
         const event = navigation.getParam('event', '');
+        console.log(event);
         const index = event.key;
         this.state.event = event;
         this.state.index = index;
-        const comments = event.comments;
+        firebase.database().ref('/events/' + this.state.event.id + '/comments/').on('value', (snapshot) => {
+            let data = snapshot.val();
+            this.state.comments = Object.values(data);
+            console.log(this.state.comments);
+         });
+
+         let commentsList = this.state.comments;
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
             <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
@@ -85,7 +93,7 @@ export default class EventScreen extends React.Component {
                 <View style={{height: '100%', flexDirection: 'column'}}>
                     <ScrollView style={{height: '100%', position: 'relative'}}>
                         <FlatList style={{ height: '100%', width: '100%', backgroundColor:'transparent', borderBottomColor:'grey', borderBottomWidth:0.3}}
-                        data={comments}
+                        data={commentsList}
                         renderItem={({item}) => <ListItem style={styles.listItem} 
                         title={item.owner}
                         subtitle={item.commentText}
