@@ -69,8 +69,8 @@ export default class EventScreen extends React.Component {
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-busy'></MaterialIcons>
                                 <Text style={{fontSize:11}}>1</Text>
                             </View>
-                        </View>
                     </View>
+                </View>
              
                     <View style={{height: 80, justifyContent: 'center'}}>
                         <Text style={{paddingLeft: 5, fontSize: 25}}>{event.eventDesc}</Text>
@@ -90,8 +90,8 @@ export default class EventScreen extends React.Component {
                             alert('You have chosen not to attend')}}></Entypo>
                     </View>
                 </View>
-                <View style={{height: '100%', flexDirection: 'column'}}>
-                    <ScrollView style={{height: '100%', position: 'relative'}}>
+                <ScrollView style={{height: '80%', position: 'relative'}}>
+                    <View style={{flexDirection: 'column'}}>
                         <FlatList style={{ height: '100%', width: '100%', backgroundColor:'transparent', borderBottomColor:'grey', borderBottomWidth:0.3}}
                         data={commentsList}
                         renderItem={({item}) => <ListItem style={styles.listItem} 
@@ -99,19 +99,17 @@ export default class EventScreen extends React.Component {
                         subtitle={item.commentText}
                         leftAvatar={{source: {uri: 'https://static.thenounproject.com/png/363633-200.png'}}}
                             
-                        > </ListItem>}
-                        /> 
-                        
-                      
-                    </ScrollView>
-                </View>
-            </View>
+                        />}/>      
+                    </View>
+                   
+            
                 <View style={{position:'absolute', bottom:0, flexDirection:'row', width:'100%', height: 55, backgroundColor: 'white', borderTopWidth: 1, borderTopColor: 'grey',}}>
-                <TextInput placeholder='What would you like to comment?' style={styles.input} value = {this.state.commentText} onChangeText={commentText => this.setState({commentText})}></TextInput>
-                
+                    <TextInput placeholder='What would you like to comment?' style={styles.input} value = {this.state.commentText} onChangeText={commentText => this.setState({commentText})}></TextInput>
                 <View style={{marginTop:7}}>
                 <Button title = 'Post' onPress ={() => {this.postComment()}} ></Button>
                 </View>
+                </View>
+                </ScrollView>
                 </View>
         </KeyboardAwareScrollView>
         
@@ -119,7 +117,7 @@ export default class EventScreen extends React.Component {
     }
 
     postComment(){
-        const {commentText} = this.state;
+        let {commentText} = this.state;
         const owner = this.state.owner;
         
         this.setState({
@@ -136,6 +134,7 @@ export default class EventScreen extends React.Component {
             //error callback
             console.log('error', error)
           })
+        this.setState({dummy: 1})
     }
 }
 
