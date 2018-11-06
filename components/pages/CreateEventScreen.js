@@ -33,9 +33,24 @@ export default class CreateEventScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { chosenDate: new Date()  };
+    this.state = { 
+      chosenDate: new Date(),
+      username: '',
+      uid: firebase.auth().currentUser.uid
+    };
 
     this.setDate = this.setDate.bind(this);
+
+    firebase.database().ref('users/').once('value', (snapshot) => {
+      let data = snapshot.val();
+      let users = Object.values(data);
+      let uid = this.state.uid;
+      users.forEach(user => {
+          if(uid === user.uid){
+              this.state.username = user.username;
+          }
+      });
+  });
   }
 
   setDate(newDate) {
@@ -44,8 +59,8 @@ export default class CreateEventScreen extends Component {
 
   writeEvent(){
     const decliners = ['None'];
-    const comments = [{'owner':'tobiaswr', 'commentText':'jamann'}];
-    let owner = firebase.auth().currentUser.uid;
+    const comments = [{'username':'', 'commentText':''}];
+    let owner = this.state.username;
     const attendees = [owner];
     const month = this.state.chosenDate.getMonth()+1;
     let minutes = 0;

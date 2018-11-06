@@ -48,7 +48,7 @@ export default class ItemComponent extends Component {
             style={styles.image} ></ImageBackground>
           </View>
           <View style={{alignItems: 'flex-start', justifyContent: 'center', paddingLeft: 65, paddingBottom:7}}>
-            <Text style ={{fontSize:18,fontWeight:'500'}}>{}</Text>
+            <Text style ={{fontSize:18,fontWeight:'500'}}>{event.owner}</Text>
             <Text style={{fontSize: 12}} numberOfLines={1}>{event.eventDesc}</Text>
             <View style={{flexDirection: 'row', paddingTop:5}}>
               <View style={{ paddingRight: 20, flexDirection:'row'}}>

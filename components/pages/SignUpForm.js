@@ -16,6 +16,8 @@ export default class SignUpForm extends React.Component{
             email: '',
             password: '',
             username:'',
+            users: [],
+            exists: false,
             loading: false
         }
     }
@@ -28,9 +30,25 @@ export default class SignUpForm extends React.Component{
             loading: true
         });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+        firebase.database().ref('users/').once('value', (snapshot) =>{
+            let data = snapshot.val();
+            let users = Object.values(data);
+            console.log(Object.values(data));
+            users.forEach(user => {
+                if(user.username === username){
+                    this.state.exists = true;
+                    alert('Username already taken');
+                }
+            });
+        });
+
+        
+
+        if(this.state.exists == false){
+            firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(this.onSignUpSuccess.bind(this))
-            .catch(this.onSignUpFailed.bind(this));
+            .catch(this.onSignUpFailed.bind(this)); 
+        }    
     }
 
     onSignUpSuccess() {

@@ -27,13 +27,27 @@ export default class EventScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        
         this.state = {
             commentText: '',
-            owner: firebase.auth().currentUser.uid,
+            uid: firebase.auth().currentUser.uid,
+            username: '',            
             event: null,
             index: null,
             comments: null,
+            users: [],
         }
+
+        firebase.database().ref('users/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let users = Object.values(data);
+            let uid = this.state.uid;
+            users.forEach(user => {
+                if(uid === user.uid){
+                    this.state.username = user.username;
+                }
+            });
+        });
     }    
 
     render() {
@@ -45,11 +59,14 @@ export default class EventScreen extends React.Component {
         this.state.index = index;
         firebase.database().ref('/events/' + this.state.event.id + '/comments/').on('value', (snapshot) => {
             let data = snapshot.val();
-            this.state.comments = Object.values(data);
+            let comments = Object.values(data);
+            const result = comments.filter(comment => comment.commentText.length >0);
+            this.state.comments = result;
             console.log(this.state.comments);
-         });
-
+         });      
+        
          let commentsList = this.state.comments;
+
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
             <View style={{backgroundColor: 'white', shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
@@ -59,7 +76,7 @@ export default class EventScreen extends React.Component {
                         style={{width: 60, height: 60,}} ></ImageBackground>
                     </View>
                     <View style={{alignItems: 'flex-start', position: 'absolute', paddingLeft: 65, top: 15}}>
-                        <Text style ={{fontSize:18,fontWeight:'500'}}>{event.user}</Text>
+                        <Text style ={{fontSize:18,fontWeight:'500'}}>{event.owner}</Text>
                         <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
                             <View style={{paddingRight:10, flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-available'></MaterialIcons>
@@ -90,26 +107,26 @@ export default class EventScreen extends React.Component {
                             alert('You have chosen not to attend')}}></Entypo>
                     </View>
                 </View>
-                <ScrollView style={{height: '80%', position: 'relative'}}>
-                    <View style={{flexDirection: 'column'}}>
+                <ScrollView style={{height: '70%', position: 'relative'}}>
+                <View style={{height: '100%', flexDirection: 'column'}}>
                         <FlatList style={{ height: '100%', width: '100%', backgroundColor:'transparent', borderBottomColor:'grey', borderBottomWidth:0.3}}
                         data={commentsList}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) => <ListItem style={styles.listItem} 
-                        title={item.owner}
+                        title={item.username}
                         subtitle={item.commentText}
                         leftAvatar={{source: {uri: 'https://static.thenounproject.com/png/363633-200.png'}}}
                             
-                        />}/>      
-                    </View>
-                   
-            
+                        />}/>   
+                </View>
+                </ScrollView>   
+                </View>
+
                 <View style={{position:'absolute', bottom:0, flexDirection:'row', width:'100%', height: 55, backgroundColor: 'white', borderTopWidth: 1, borderTopColor: 'grey',}}>
                     <TextInput placeholder='What would you like to comment?' style={styles.input} value = {this.state.commentText} onChangeText={commentText => this.setState({commentText})}></TextInput>
                 <View style={{marginTop:7}}>
                 <Button title = 'Post' onPress ={() => {this.postComment()}} ></Button>
                 </View>
-                </View>
-                </ScrollView>
                 </View>
         </KeyboardAwareScrollView>
         
@@ -117,16 +134,26 @@ export default class EventScreen extends React.Component {
     }
 
     postComment(){
+        firebase.database().ref('users/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let users = Object.values(data);
+            let uid = this.state.uid;
+            users.forEach(user => {
+                if(uid === user.uid){
+                    this.state.username = user.username;
+                }
+            });
+        });
         let {commentText} = this.state;
-        const owner = this.state.owner;
+              
         
         this.setState({
             error:'',
             loading: true
         });
-
+        let username = this.state.username;
         firebase.database().ref('/events/' + this.state.event.id + '/comments/').push({
-            owner,
+            username,
             commentText
         }).then((data)=>{
             alert('Comment created successfully');
@@ -134,7 +161,7 @@ export default class EventScreen extends React.Component {
             //error callback
             console.log('error', error)
           })
-        this.setState({dummy: 1})
+          this.state.commentText = '';
     }
 }
 
