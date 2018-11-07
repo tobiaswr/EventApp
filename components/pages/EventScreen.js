@@ -36,6 +36,8 @@ export default class EventScreen extends React.Component {
             index: null,
             comments: null,
             users: [],
+            attendingCount: 0,
+            decliningCount: 0,
         }
 
         firebase.database().ref('users/').once('value', (snapshot) => {
@@ -53,7 +55,6 @@ export default class EventScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         const event = navigation.getParam('event', '');
-        console.log(event);
         const index = event.key;
         this.state.event = event;
         this.state.index = index;
@@ -62,10 +63,11 @@ export default class EventScreen extends React.Component {
             let comments = Object.values(data);
             const result = comments.filter(comment => comment.commentText.length >0);
             this.state.comments = result;
-            console.log(this.state.comments);
          });      
-        
          let commentsList = this.state.comments;
+         let attendingCount = this.getAttendees();
+         let decliningCount = this.getDecliners();
+
 
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
@@ -80,11 +82,11 @@ export default class EventScreen extends React.Component {
                         <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
                             <View style={{paddingRight:10, flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-available'></MaterialIcons>
-                                <Text style={{fontSize:11}}>1</Text> 
+                                <Text style={{fontSize:11, top: 2}}>{attendingCount}</Text> 
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-busy'></MaterialIcons>
-                                <Text style={{fontSize:11}}>1</Text>
+                                <Text style={{fontSize:11, top: 2}}>{decliningCount}</Text>
                             </View>
                     </View>
                 </View>
@@ -95,16 +97,20 @@ export default class EventScreen extends React.Component {
 
                 </View>
 
+                    <View style={{position: 'absolute', right: 150, top: 13, flexDirection: "column"}}>
+                        <Text style={{fontSize: 25}}>{event.eventTime}</Text>
+                        <Text style={{fontSize: 13}}>{event.eventDate}</Text>
+                    </View>
                 <View style={{flexDirection: 'row', position: 'absolute', width: '100%'}}>
                     <View style={{position: 'absolute', right: 10, paddingTop: 20, flexDirection: 'row'}}>
                         <Entypo style={{paddingRight: 25, fontSize:35}} name='check' onPress = {() =>
-                            {event.attendees.length++
+                            {this.attend()
                             this.setState({dummy: 1})
-                            alert('Ready to hang out!')}}></Entypo>
+                            }}></Entypo>
                         <Entypo style={{paddingRight:5, fontSize:35}} name='circle-with-cross' onPress = {() => 
-                            {event.decliners.length++
+                            {this.decline()
                             this.setState({dummy: 1})
-                            alert('You have chosen not to attend')}}></Entypo>
+                            }}></Entypo>
                     </View>
                 </View>
                 <ScrollView style={{height: '70%', position: 'relative'}}>
@@ -132,8 +138,7 @@ export default class EventScreen extends React.Component {
         
         )
     }
-
-    postComment(){
+    getUsername(){
         firebase.database().ref('users/').once('value', (snapshot) => {
             let data = snapshot.val();
             let users = Object.values(data);
@@ -144,14 +149,57 @@ export default class EventScreen extends React.Component {
                 }
             });
         });
+        let username = this.state.username;
+        return username;
+    }
+    getAttendees(){
+        firebase.database().ref('events/' + this.state.event.id + '/attendees/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let attendees = Object.values(data);
+            this.state.attendingCount = attendees.length;
+        });
+        let attendingCount = this.state.attendingCount;
+        return attendingCount;
+    }
+    getDecliners(){
+        firebase.database().ref('events/' + this.state.event.id + '/decliners/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let decliners = Object.values(data);
+            this.state.decliningCount = decliners.length;
+        });
+        let decliningCount = this.state.decliningCount;
+        return decliningCount;
+    }
+
+    attend(){
+        username = this.getUsername();
+        firebase.database().ref('/events/' + this.state.event.id + '/attendees/').push({
+            username,
+        }).then((data)=>{
+            alert('You are attending this event');
+        }).catch((error)=>{
+            console.log('error', error)
+        })
+    }
+
+    decline(){
+        username = this.getUsername();
+        firebase.database().ref('/events/' + this.state.event.id + '/decliners/').push({
+            username,
+        }).then((data) => {
+            alert('You have declined joining the event');
+        }).catch((error) =>{
+            console.log('error', error)
+        })
+    }
+
+    postComment(){
         let {commentText} = this.state;
-              
-        
         this.setState({
             error:'',
             loading: true
         });
-        let username = this.state.username;
+        let username = this.getUsername();
         firebase.database().ref('/events/' + this.state.event.id + '/comments/').push({
             username,
             commentText
@@ -163,6 +211,8 @@ export default class EventScreen extends React.Component {
           })
           this.state.commentText = '';
     }
+
+
 }
 
 

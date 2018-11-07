@@ -65,6 +65,10 @@ export default class ItemComponent extends Component {
               </View>
             </View>
           </View>
+          <View style={{position: 'absolute', right: 60, top: 14, flexDirection: "column"}}>
+            <Text style={{fontSize: 25}}>{event.eventTime}</Text>
+            <Text style={{fontSize: 13}}>{event.eventDate}</Text>
+          </View>
           <View style={{position: 'absolute', width: '100%'}}>
             <Entypo style= {{fontSize: 35, position: 'absolute', right: 10, paddingTop: 15}} name='chevron-thin-right' >
             </Entypo>

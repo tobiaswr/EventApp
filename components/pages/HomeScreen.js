@@ -46,7 +46,8 @@ export default class HomeScreen extends Component {
   });
 
     state = {
-        events: []
+        events: [],
+        comments: []
     }
 
     componentDidMount() {
@@ -60,7 +61,7 @@ export default class HomeScreen extends Component {
               i++;
             })
             this.setState({events});
-            console.log(events);
+            //console.log(events);
          });
     }
 
