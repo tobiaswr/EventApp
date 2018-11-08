@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, TextInput, View, Image, Button } from 'react-native';
 import firebase from 'firebase';
 
 
@@ -22,14 +22,30 @@ export default class SettingsScreen extends React.Component {
      elevation: 4,
 
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+        pictureUrl: '',
+    }
+}
+    updatePicture(){
+      this.setState({
+        pictureUrl: '',
+      })
+      alert ('picture updated');
+    }
+
     render() {
     return (
       <View style= {styles.container}>
-          <Button style= {styles.logOut} title= "Log Out" onPress = {() => {firebase.auth().signOut()}}>
+          <TextInput placeholder= 'Copy image url here' value = {this.state.pictureUrl} onChangeText={pictureUrl => this.setState({pictureUrl})}></TextInput>
+          <Button style= {styles.logOut} title='Update profile picture' onPress = {() => this.updatePicture()}></Button>
+          <Button style= {styles.logOut} title= 'Log Out' onPress = {() => {firebase.auth().signOut()}}>
           </Button>
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

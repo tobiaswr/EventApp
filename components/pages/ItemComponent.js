@@ -35,13 +35,11 @@ export default class ItemComponent extends Component {
     this.state ={navigation: this.props.navigation}
   }
 
+
   render() {
     return (
       <View style={styles.eventsList}>
         {this.props.events.map((event, index) => {
-          const commentCount = event.comments.lenght;
-          console.log(event.comments);
-          console.log(commentCount);
             return (
                     <View style={{alignItems:'center', paddingTop:8}} key={index}>
         <TouchableHighlight onPress ={() => this.state.navigation.navigate('Event', {event, index})} style= {{height: 70, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
@@ -60,11 +58,11 @@ export default class ItemComponent extends Component {
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <MaterialIcons style={styles.entypoLogo} name='event-available'></MaterialIcons>
-                <Text style={{fontSize:11}}>{}</Text> 
+                <Text style={{fontSize:11}}>{event.attendees.length}</Text> 
               </View>
               <View style={{paddingRight: 20, flexDirection:'row'}}>
                 <MaterialIcons style={styles.entypoLogo} name='event-busy'></MaterialIcons>
-                <Text style={{fontSize:11}}>{}</Text>
+                <Text style={{fontSize:11}}>{event.decliners.length}</Text>
               </View>
             </View>
           </View>

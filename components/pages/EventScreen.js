@@ -59,9 +59,6 @@ export default class EventScreen extends React.Component {
         this.state.event = event;
         this.state.index = index;
         this.state.comments = event.comments;
-        let attendingCount = this.getAttendees();
-        let decliningCount = this.getDecliners();
-
 
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
@@ -76,11 +73,11 @@ export default class EventScreen extends React.Component {
                         <View style={{position: 'absolute',paddingLeft: 65,  top: 25, flexDirection:'row'}}>
                             <View style={{paddingRight:10, flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-available'></MaterialIcons>
-                                <Text style={{fontSize:11, top: 2}}>{attendingCount}</Text> 
+                                <Text style={{fontSize:11, top: 2}}>{event.attendees.length}</Text> 
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <MaterialIcons style={{paddingRight:0, fontSize:13}} name='event-busy'></MaterialIcons>
-                                <Text style={{fontSize:11, top: 2}}>{decliningCount}</Text>
+                                <Text style={{fontSize:11, top: 2}}>{event.decliners.length}</Text>
                             </View>
                     </View>
                 </View>
@@ -146,27 +143,18 @@ export default class EventScreen extends React.Component {
         let username = this.state.username;
         return username;
     }
-    getAttendees(){
-        firebase.database().ref('events/' + this.state.event.id + '/attendees/').once('value', (snapshot) => {
-            let data = snapshot.val();
-            let attendees = Object.values(data);
-            this.state.attendingCount = attendees.length;
-        });
-        let attendingCount = this.state.attendingCount;
-        return attendingCount;
-    }
-    getDecliners(){
-        firebase.database().ref('events/' + this.state.event.id + '/decliners/').once('value', (snapshot) => {
-            let data = snapshot.val();
-            let decliners = Object.values(data);
-            this.state.decliningCount = decliners.length;
-        });
-        let decliningCount = this.state.decliningCount;
-        return decliningCount;
-    }
 
     attend(){
         username = this.getUsername();
+        let attendees = this.state.event.attendees;
+        let attending = false;
+
+        attendees.forEach(attendee => {
+            if(attendee.username === username){
+                attending = true;
+            }
+        })
+        if(attending === false){
         firebase.database().ref('/events/' + this.state.event.id + '/attendees/').push({
             username,
         }).then((data)=>{
@@ -174,17 +162,35 @@ export default class EventScreen extends React.Component {
         }).catch((error)=>{
             console.log('error', error)
         })
+    } else {
+        alert('You have already joined this event')
+    }
+
     }
 
     decline(){
         username = this.getUsername();
-        firebase.database().ref('/events/' + this.state.event.id + '/decliners/').push({
-            username,
-        }).then((data) => {
-            alert('You have declined joining the event');
-        }).catch((error) =>{
-            console.log('error', error)
+        let decliners = this.state.event.decliners;
+        let declining = false;
+
+        decliners.forEach(decliner => {
+            if(decliner.username === username){
+                declining = true;
+            }
         })
+        if(declining === false){
+            firebase.database().ref('/events/' + this.state.event.id + '/decliners/').push({
+                username,
+            }).then((data) => {
+                alert('You have declined joining the event');
+            }).catch((error) =>{
+                console.log('error', error)
+            })
+        }else {
+            alert('You have already declined this event')
+        }
+
+
     }
 
     postComment(){

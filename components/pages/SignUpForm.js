@@ -16,6 +16,7 @@ export default class SignUpForm extends React.Component{
             email: '',
             password: '',
             username:'',
+            pictureUrl:'https://static.thenounproject.com/png/363633-200.png',
             users: [],
             exists: false,
             loading: false
@@ -54,14 +55,17 @@ export default class SignUpForm extends React.Component{
     onSignUpSuccess() {
         let uid = firebase.auth().currentUser.uid;
         let username = this.state.username;
+        let pictureUrl = this.state.pictureUrl;
         firebase.database().ref('users/').push({
             username,
             uid,
+            pictureUrl,
         });
         this.setState({
             email:'',
             password:'',
             username:'',
+            pictureUrl: 'https://static.thenounproject.com/png/363633-200.png',
             loading: false,
             error:'' });
             

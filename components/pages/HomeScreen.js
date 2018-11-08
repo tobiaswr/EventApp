@@ -65,7 +65,17 @@ export default class HomeScreen extends Component {
                 comments = result;
 
               });
+              firebase.database().ref('/events/' + event.id + '/attendees').once('value', (snapshot) => {
+                let data = snapshot.val();
+                attendees = Object.values(data);
+              });
+              firebase.database().ref('/events/' + event.id + '/decliners').once('value', (snapshot) => {
+                let data = snapshot.val();
+                decliners = Object.values(data);
+              });
               event.comments = comments;
+              event.attendees = attendees;
+              event.decliners = decliners;
               i++;
             })
             this.setState({events});
