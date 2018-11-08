@@ -47,7 +47,6 @@ export default class HomeScreen extends Component {
 
     state = {
         events: [],
-        comments: []
     }
 
     componentDidMount() {
@@ -55,9 +54,18 @@ export default class HomeScreen extends Component {
             let data = snapshot.val();
             let eventkeys = Object.keys(data);
             let events = Object.values(data);
+            let comments = [];
             let i = 0;
             events.forEach(event => {
               event.id = eventkeys[i];
+              firebase.database().ref('/events/' + event.id + '/comments').once('value', (snapshot) => {
+                let data = snapshot.val();
+                comments = Object.values(data);
+                const result = comments.filter(comment => comment.commentText.length >0);
+                comments = result;
+
+              });
+              event.comments = comments;
               i++;
             })
             this.setState({events});

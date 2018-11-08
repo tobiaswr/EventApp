@@ -58,15 +58,9 @@ export default class EventScreen extends React.Component {
         const index = event.key;
         this.state.event = event;
         this.state.index = index;
-        firebase.database().ref('/events/' + this.state.event.id + '/comments/').on('value', (snapshot) => {
-            let data = snapshot.val();
-            let comments = Object.values(data);
-            const result = comments.filter(comment => comment.commentText.length >0);
-            this.state.comments = result;
-         });      
-         let commentsList = this.state.comments;
-         let attendingCount = this.getAttendees();
-         let decliningCount = this.getDecliners();
+        this.state.comments = event.comments;
+        let attendingCount = this.getAttendees();
+        let decliningCount = this.getDecliners();
 
 
         return(
@@ -116,7 +110,7 @@ export default class EventScreen extends React.Component {
                 <ScrollView style={{height: '70%', position: 'relative'}}>
                 <View style={{height: '100%', flexDirection: 'column'}}>
                         <FlatList style={{ height: '100%', width: '100%', backgroundColor:'transparent', borderBottomColor:'grey', borderBottomWidth:0.3}}
-                        data={commentsList}
+                        data={this.state.comments}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item}) => <ListItem style={styles.listItem} 
                         title={item.username}
