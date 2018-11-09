@@ -22,24 +22,10 @@ export default class SettingsScreen extends React.Component {
      elevation: 4,
 
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-        pictureUrl: '',
-    }
-}
-    updatePicture(){
-      this.setState({
-        pictureUrl: '',
-      })
-      alert ('picture updated');
-    }
 
     render() {
     return (
       <View style= {styles.container}>
-          <TextInput placeholder= 'Copy image url here' value = {this.state.pictureUrl} onChangeText={pictureUrl => this.setState({pictureUrl})}></TextInput>
-          <Button style= {styles.logOut} title='Update profile picture' onPress = {() => this.updatePicture()}></Button>
           <Button style= {styles.logOut} title= 'Log Out' onPress = {() => {firebase.auth().signOut()}}>
           </Button>
       </View>

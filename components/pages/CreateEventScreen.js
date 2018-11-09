@@ -58,11 +58,19 @@ export default class CreateEventScreen extends Component {
   }
 
   writeEvent(){
-    const decliners = ['None'];
+    const decliners = [{'username' : ''}];
     const comments = [{'username':'', 'commentText':''}];
     let owner = this.state.username;
-    const attendees = [owner];
+    const attendees = [{'username' : owner}];
     const month = this.state.chosenDate.getMonth()+1;
+    let day = '';
+    let dayNow = this.state.chosenDate.getDate();
+    if (dayNow < 10){
+      day = '0' + dayNow;
+    }
+    else{
+      day = dayNow;
+    }
     let minutes = 0;
     if (this.state.chosenDate.getMinutes() < 10){
       minutes = '0' + this.state.chosenDate.getMinutes();
@@ -78,7 +86,7 @@ export default class CreateEventScreen extends Component {
       hours = this.state.chosenDate.getHours();
     }
     const eventDesc = this.state.eventDesc;
-    const eventDate = this.state.chosenDate.getDate() + '/' + month;
+    const eventDate = day + '/' + month;
     const eventTime = hours + ':' + minutes;
     
 

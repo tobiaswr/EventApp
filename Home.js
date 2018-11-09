@@ -12,10 +12,6 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-var bgColor = '#606075';
-var navColor = '#3F3F54';
-
-var loggedInUser;
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen}, 

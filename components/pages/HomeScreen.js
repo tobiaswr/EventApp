@@ -58,20 +58,22 @@ export default class HomeScreen extends Component {
             let i = 0;
             events.forEach(event => {
               event.id = eventkeys[i];
-              firebase.database().ref('/events/' + event.id + '/comments').once('value', (snapshot) => {
+              firebase.database().ref('/events/' + event.id + '/comments').on('value', (snapshot) => {
                 let data = snapshot.val();
                 comments = Object.values(data);
                 const result = comments.filter(comment => comment.commentText.length >0);
                 comments = result;
 
               });
-              firebase.database().ref('/events/' + event.id + '/attendees').once('value', (snapshot) => {
+              firebase.database().ref('/events/' + event.id + '/attendees').on('value', (snapshot) => {
                 let data = snapshot.val();
                 attendees = Object.values(data);
               });
-              firebase.database().ref('/events/' + event.id + '/decliners').once('value', (snapshot) => {
+              firebase.database().ref('/events/' + event.id + '/decliners').on('value', (snapshot) => {
                 let data = snapshot.val();
                 decliners = Object.values(data);
+                const filter = decliners.filter(decliner => decliner.username.length > 0);
+                decliners = filter;
               });
               event.comments = comments;
               event.attendees = attendees;
@@ -90,8 +92,7 @@ export default class HomeScreen extends Component {
                 <ScrollView>               
                     ? <ItemComponent navigation={this.props.navigation} events={this.state.events} style ={{paddingTop:0}} />  
                 </ScrollView>
-            }
-                
+            }                
             </View>
         )
     }

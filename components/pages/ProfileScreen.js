@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, Text, View, Button, ImageBackground} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
+import firebase from 'firebase';
 
 
-var bgColor = this.backgColor;
-
-
-export default class DetailsScreen extends React.Component {
+export default class ProfileScreen extends Component {
     static navigationOptions = {
         title: "Profile",
         headerTitleStyle: {
@@ -19,8 +17,34 @@ export default class DetailsScreen extends React.Component {
          },
          headerTintColor: 'white'
     };
+    constructor(props) {
+        super(props);
+
+        
+
+        
+
+    }
+
+    state = {
+        uid: firebase.auth().currentUser.uid,
+        username: ''
+    }
 
     render() {
+        firebase.database().ref('users/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let users = Object.values(data);
+            let uid = this.state.uid;
+            let username = '';
+            users.forEach(user => {
+                if(uid === user.uid){
+                    username = user.username;
+                }
+            });
+            this.state.username = username;
+        });
+        const kjoer = this.state.username;
         return(
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             
@@ -31,14 +55,14 @@ export default class DetailsScreen extends React.Component {
                         style={styles.image} ></ImageBackground>
                     </View>
                         <View style={styles.infoContainer}>
-                            <Text style={styles.name}>Name</Text>
+                            <Text style={styles.name}>{kjoer}</Text>
                         <View style={styles.rows}>
                             <Ionicons name = 'md-at' size = {15} style= {styles.icons}></Ionicons>
-                            <Text style={styles.infoText}>Username</Text>
+                            <Text style={{fontSize: 50}}>{kjoer}</Text>
                         </View>
                         <View style={styles.rows}>
                             <Ionicons name = 'md-compass' size = {15} style= {styles.icons}></Ionicons>                                       
-                            <Text style={styles.infoText}>Location</Text>
+                            <Text>Location</Text>
                         </View> 
                     </View>
 

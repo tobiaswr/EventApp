@@ -129,23 +129,9 @@ export default class EventScreen extends React.Component {
         
         )
     }
-    getUsername(){
-        firebase.database().ref('users/').once('value', (snapshot) => {
-            let data = snapshot.val();
-            let users = Object.values(data);
-            let uid = this.state.uid;
-            users.forEach(user => {
-                if(uid === user.uid){
-                    this.state.username = user.username;
-                }
-            });
-        });
-        let username = this.state.username;
-        return username;
-    }
 
     attend(){
-        username = this.getUsername();
+        let username = this.state.username;
         let attendees = this.state.event.attendees;
         let attending = false;
 
@@ -169,7 +155,7 @@ export default class EventScreen extends React.Component {
     }
 
     decline(){
-        username = this.getUsername();
+        let username = this.state.username;
         let decliners = this.state.event.decliners;
         let declining = false;
 
@@ -199,7 +185,7 @@ export default class EventScreen extends React.Component {
             error:'',
             loading: true
         });
-        let username = this.getUsername();
+        let username = this.state.username;
         firebase.database().ref('/events/' + this.state.event.id + '/comments/').push({
             username,
             commentText
