@@ -118,8 +118,6 @@ const styles = StyleSheet.create({
     },
     icons: {
         paddingRight: 2,
-
-
     }
     
 });
