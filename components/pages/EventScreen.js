@@ -52,16 +52,19 @@ export default class EventScreen extends React.Component {
         });
     }    
 
-
-    render() {
-        const { navigation } = this.props;
-        const event = navigation.getParam('event', '');
+    getCommentsForEvent(event){
         firebase.database().ref('/events/' + event.id + '/comments').on('value', (snapshot) => {
             let data = snapshot.val();
             comments = Object.values(data);
             const result = comments.filter(comment => comment.commentText.length >0);
             this.state.comments = result;
         });
+    }
+
+    render() {
+        const { navigation } = this.props;
+        const event = navigation.getParam('event', '');
+        this.getCommentsForEvent(event);
         const index = event.key;
         this.state.event = event;
         this.state.index = index;
@@ -202,6 +205,8 @@ export default class EventScreen extends React.Component {
             console.log('error', error)
           })
           this.state.commentText = '';
+          this.setState({dummy: 1});
+          this.getCommentsForEvent(this.state.event);
     }
 
 
