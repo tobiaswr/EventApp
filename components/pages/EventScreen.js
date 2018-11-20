@@ -52,6 +52,7 @@ export default class EventScreen extends React.Component {
         });
     }    
 
+
     render() {
         const { navigation } = this.props;
         const event = navigation.getParam('event', '');
