@@ -17,7 +17,7 @@ export default class HomeScreen extends Component {
 
   static navigationOptions = ({navigation}) => ({
     headerTitle: (
-      <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+      <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
   ),
    headerStyle: {
       backgroundColor: '#22561e',
@@ -37,11 +37,6 @@ export default class HomeScreen extends Component {
         onPress ={() => {navigation.navigate('CreateEvent')}}
         />
       </View>
-      ),
-      headerLeft: (
-        <View style={{flex: 1,paddingLeft:12, alignItems: 'center', justifyContent: 'center'}}>
-        <Ionicons name = 'md-menu' size= {28} color='#d8d8d8'/>
-        </View>
       ),
   });
 
@@ -90,7 +85,7 @@ export default class HomeScreen extends Component {
             <View style={styles.container}>
             {
                 <ScrollView>               
-                    ? <ItemComponent navigation={this.props.navigation} events={this.state.events} style ={{paddingTop:0}} />  
+                    ? <ItemComponent navigation={this.props.navigation} events={this.state.events} style={{width: '100%'}}/>  
                 </ScrollView>
             }                
             </View>

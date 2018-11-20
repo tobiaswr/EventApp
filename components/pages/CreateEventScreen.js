@@ -15,7 +15,7 @@ import firebase from 'firebase'
 export default class CreateEventScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     headerTitle: (
-      <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+      <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
   ),
    headerStyle: {
       backgroundColor: '#22561e',

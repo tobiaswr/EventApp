@@ -41,10 +41,10 @@ export default class ItemComponent extends Component {
       <View style={styles.eventsList}>
         {this.props.events.map((event, index) => {
             return (
-                    <View style={{alignItems:'center', paddingTop:8}} key={index}>
-        <TouchableHighlight onPress ={() => this.state.navigation.navigate('Event', {event, index})} style= {{height: 70, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-          <View style={{height: 70, width: 365, backgroundColor:'white', borderRadius: 28, shadowRadius: 3, shadowOpacity:0.3, shadowOffset: {width: 1, height: 0}, shadowColor: '#000000', elevation: 4,}}>
-          <View style={{flex: 1, alignItems: 'flex-start', paddingTop:5, width: 70}}>
+                    <View style={{alignItems:'center'}} key={index}>
+        <TouchableHighlight onPress ={() => this.state.navigation.navigate('Event', {event, index})} style= {{height: 75, width: '100%', backgroundColor:'white', borderRadius: 28,}}>
+          <View style={{height: 75, backgroundColor:'white', borderBottomColor: 'black', borderBottomWidth: 0.5}}>
+          <View style={{flex: 1, alignItems: 'flex-start', paddingTop:7.5 ,width: 70, }} >
           <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
             style={styles.image} ></ImageBackground>
           </View>

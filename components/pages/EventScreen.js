@@ -9,7 +9,7 @@ import firebase from 'firebase'
 export default class EventScreen extends React.Component {
     static navigationOptions = {
         headerTitle: (
-            <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+            <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
         ),
          headerStyle: {
             backgroundColor: '#22561e',
@@ -55,10 +55,15 @@ export default class EventScreen extends React.Component {
     render() {
         const { navigation } = this.props;
         const event = navigation.getParam('event', '');
+        firebase.database().ref('/events/' + event.id + '/comments').on('value', (snapshot) => {
+            let data = snapshot.val();
+            comments = Object.values(data);
+            const result = comments.filter(comment => comment.commentText.length >0);
+            this.state.comments = result;
+        });
         const index = event.key;
         this.state.event = event;
         this.state.index = index;
-        this.state.comments = event.comments;
 
         return(
         <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }} contentContainerStyle={styles.container} scrollEnabled={false}> 
