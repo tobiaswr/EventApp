@@ -1,5 +1,4 @@
 import React, { Component, TouchableOpacity } from 'react'
-import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 
 import {
   DatePickerIOS,
@@ -62,6 +61,7 @@ export default class CreateEventScreen extends Component {
     const comments = [{'username':'', 'commentText':''}];
     let owner = this.state.username;
     const attendees = [{'username' : owner}];
+    const happening = true;
     const month = this.state.chosenDate.getMonth()+1;
     let day = '';
     let dayNow = this.state.chosenDate.getDate();
@@ -97,7 +97,8 @@ export default class CreateEventScreen extends Component {
       attendees,
       decliners,
       comments,
-      owner
+      owner,
+      happening
     }).then((data)=>{
       alert('Event created successfully');
     }).catch((error)=>{

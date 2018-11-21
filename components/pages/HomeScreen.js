@@ -46,6 +46,7 @@ export default class HomeScreen extends Component {
 
     componentDidMount() {
         firebase.database().ref('/events').on('value', (snapshot) => {
+          if(snapshot.val() != null){
             let data = snapshot.val();
             let eventkeys = Object.keys(data);
             let events = Object.values(data);
@@ -77,6 +78,7 @@ export default class HomeScreen extends Component {
             })
             this.setState({events});
             //console.log(events);
+          }
          });
     }
 
