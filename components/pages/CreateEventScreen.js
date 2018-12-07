@@ -1,4 +1,4 @@
-import React, { Component, TouchableOpacity } from 'react'
+import React, { Component} from 'react'
 
 import {
   DatePickerIOS,
@@ -39,7 +39,7 @@ export default class CreateEventScreen extends Component {
     };
 
     this.setDate = this.setDate.bind(this);
-
+    //retrieves users to set current users, which will be used when creating event
     firebase.database().ref('users/').once('value', (snapshot) => {
       let data = snapshot.val();
       let users = Object.values(data);
@@ -51,11 +51,11 @@ export default class CreateEventScreen extends Component {
       });
   });
   }
-
+  //method to retrieve the date set in the DatePicker
   setDate(newDate) {
     this.setState({chosenDate: newDate})
   }
-
+  //method to create an event
   writeEvent(){
     const decliners = [{'username' : ''}];
     const comments = [{'username':'', 'commentText':''}];
@@ -89,7 +89,7 @@ export default class CreateEventScreen extends Component {
     const eventDate = day + '/' + month;
     const eventTime = hours + ':' + minutes;
     
-
+    //creates the event in firebase
     firebase.database().ref('events/').push({
       eventDesc,
       eventDate,

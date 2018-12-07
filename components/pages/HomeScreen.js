@@ -4,15 +4,6 @@ import ItemComponent from './ItemComponent';
 import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, Image, TouchableHighlight} from 'react-native';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 
-
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-    }
-  })
-
 export default class HomeScreen extends Component {
 
   static navigationOptions = ({navigation}) => ({
@@ -77,7 +68,6 @@ export default class HomeScreen extends Component {
               i++;
             })
             this.setState({events});
-            //console.log(events);
           }
          });
     }
@@ -93,4 +83,12 @@ export default class HomeScreen extends Component {
             </View>
         )
     }
+
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  }
+})

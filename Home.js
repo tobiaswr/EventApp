@@ -2,7 +2,6 @@ import HomeScreen from './components/pages/HomeScreen';
 import SettingsScreen from './components/pages/SettingsScreen';
 import EventScreen from './components/pages/EventScreen';
 import ProfileScreen from './components/pages/ProfileScreen';
-import SignInForm from './components/pages/SignInForm';
 import SearchScreen from './components/pages/SearchScreen';
 import ResultScreen from './components/pages/ResultScreen';
 import CreateEventScreen from './components/pages/CreateEventScreen';

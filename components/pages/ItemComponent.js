@@ -5,25 +5,6 @@ import { StyleSheet, Text, View, Alert, ListView, ScrollView, ImageBackground, I
 import PropTypes from 'prop-types';
 import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
 
-const styles = StyleSheet.create({
-    eventsList: {
-        
-    },
-    eventtext: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    image: {
-        width: 60,
-        height: 60,
-    },
-    entypoLogo: {
-        paddingRight:0, 
-        fontSize:13,
-    }
-});
-
 export default class ItemComponent extends Component {
 
   static propTypes = {
@@ -35,10 +16,9 @@ export default class ItemComponent extends Component {
     this.state ={navigation: this.props.navigation}
   }
 
-
   render() {
     return (
-      <View style={styles.eventsList}>
+      <View>
         {this.props.events.map((event, index) => {
             return (
                     <View style={{alignItems:'center'}} key={index}>
@@ -52,15 +32,15 @@ export default class ItemComponent extends Component {
             <Text style ={{fontSize:18,fontWeight:'500'}}>{event.owner}</Text>
             <Text style={{fontSize: 12}} numberOfLines={1}>{event.eventDesc}</Text>
             <View style={{flexDirection: 'row', paddingTop:5}}>
-              <View style={{ paddingRight: 20, flexDirection:'row'}}>
+              <View style={styles.iconView}>
                 <FontAwesome style={{paddingRight:2, fontSize:11}} name = 'comment-o'></FontAwesome>
                 <Text style={{fontSize:11}}>{event.comments.length}</Text> 
               </View>
-              <View style={{paddingRight: 20, flexDirection:'row'}}>
+              <View style={styles.iconView}>
                 <MaterialIcons style={styles.entypoLogo} name='event-available'></MaterialIcons>
                 <Text style={{fontSize:11}}>{event.attendees.length}</Text> 
               </View>
-              <View style={{paddingRight: 20, flexDirection:'row'}}>
+              <View style={styles.iconView}>
                 <MaterialIcons style={styles.entypoLogo} name='event-busy'></MaterialIcons>
                 <Text style={{fontSize:11}}>{event.decliners.length}</Text>
               </View>
@@ -83,3 +63,18 @@ export default class ItemComponent extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  iconView: {
+    paddingRight: 20, 
+    flexDirection:'row'
+  },
+  image: {
+      width: 60,
+      height: 60,
+  },
+  entypoLogo: {
+      paddingRight:0, 
+      fontSize:13,
+  }
+});

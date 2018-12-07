@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase';
 import SignInForm from './SignInForm';
 
@@ -22,6 +22,7 @@ export default class SignUpForm extends React.Component{
         }
     }
 
+    //Method for button functionality
     onButtonPress(){
         const {email, password, username} = this.state;
 
@@ -51,6 +52,7 @@ export default class SignUpForm extends React.Component{
         }    
     }
 
+    //Method to create new user in firebase
     onSignUpSuccess() {
         let uid = firebase.auth().currentUser.uid;
         let username = this.state.username;
@@ -68,6 +70,7 @@ export default class SignUpForm extends React.Component{
             alert("User created successfully");
     }
 
+    //Method if signup fails
     onSignUpFailed(err) {
         this.setState({
             loading:false,
@@ -110,6 +113,7 @@ export default class SignUpForm extends React.Component{
         );
     }
 
+    //Create loading effect when pressing sign up button
     renderButton(){
         if(this.state.loading){
             return <ActivityIndicator size='small'/>
