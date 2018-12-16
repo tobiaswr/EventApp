@@ -210,8 +210,9 @@ export default class EventScreen extends React.Component {
             console.log('error', error)
           })
           this.state.commentText = '';
-          this.setState({dummy: 1});
+          
           this.getCommentsForEvent(this.state.event);
+          this.setState({dummy: 1});
     }
 
 

@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import {StyleSheet, View, Text, ImageBackground, ScrollView} from 'react-native';
 import ItemComponent from './ItemComponent';
 
-export default class ProfileScreen extends Component{
+export default class ProfileScreen extends React.Component{
     static navigationOptions = ({navigation}) => ({
         headerTitle: 'Profile',
        headerStyle: {
@@ -25,10 +25,11 @@ export default class ProfileScreen extends Component{
         super(props);
         this.state = {
           users: [],
+          uid: firebase.auth().currentUser.uid,
           username: '',
           events: [],
           myEvents: [],
-        };
+        }
         
         
     }
@@ -73,22 +74,31 @@ export default class ProfileScreen extends Component{
               })
               this.setState({events});
             }
-           });
+        });
       
+        firebase.database().ref('users/').once('value', (snapshot) => {
+            let data = snapshot.val();
+            let users = Object.values(data);
+            let uid = this.state.uid;
+            users.forEach(user => {
+                if(uid === user.uid){
+                    this.setState({username: user.username});
+                }
+            });
+            this.state.events.forEach(event => {
+                if(event.owner === this.state.username){
+                    this.state.myEvents.push(event);
+                }
+            })
+        });
     }
 
+    
+
     render() {
-        this.state.users.forEach(user => {
-            if(this.state.uid === user.uid){
-                this.state.username= user.username;
-            }
-        });
-        let events = [];
-        this.state.events.forEach(event => {
-            if(event.owner === 'martings'){
-                this.state.myEvents.push(event);
-            }
-        })
+        
+
+        
         return(
             <View style={{flex: 1, justifyContent: 'center'}}>
                 <View style={{height: '20%', backgroundColor: 'white', flexDirection: 'row'}}>
