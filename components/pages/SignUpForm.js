@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView} from 'react-native';
 import firebase from 'firebase';
 import SignInForm from './SignInForm';
 
@@ -7,7 +7,7 @@ import SignInForm from './SignInForm';
 export default class SignUpForm extends React.Component{
     static navigationOptions = {
         headerTitle: (
-          <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+          <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
         )
     };
     constructor(props) {
@@ -15,32 +15,62 @@ export default class SignUpForm extends React.Component{
         this.state = {
             email: '',
             password: '',
+            username:'',
+            users: [],
+            exists: false,
             loading: false
         }
     }
 
+    //Method for button functionality
     onButtonPress(){
-        const {email, password} = this.state;
+        const {email, password, username} = this.state;
 
         this.setState({
             error:'',
             loading: true
         });
 
-        firebase.auth().createUserWithEmailAndPassword(email, password)
+        firebase.database().ref('users/').once('value', (snapshot) =>{
+            let data = snapshot.val();
+            let users = Object.values(data);
+            console.log(Object.values(data));
+            users.forEach(user => {
+                if(user.username === username){
+                    this.state.exists = true;
+                    alert('Username already taken');
+                }
+            });
+        });
+
+        
+
+        if(this.state.exists == false){
+            firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(this.onSignUpSuccess.bind(this))
-            .catch(this.onSignUpFailed.bind(this));
+            .catch(this.onSignUpFailed.bind(this)); 
+        }    
     }
 
+    //Method to create new user in firebase
     onSignUpSuccess() {
+        let uid = firebase.auth().currentUser.uid;
+        let username = this.state.username;
+        firebase.database().ref('users/').push({
+            username,
+            uid,
+        });
         this.setState({
             email:'',
             password:'',
+            username:'',
             loading: false,
             error:'' });
+            
             alert("User created successfully");
     }
 
+    //Method if signup fails
     onSignUpFailed(err) {
         this.setState({
             loading:false,
@@ -52,10 +82,10 @@ export default class SignUpForm extends React.Component{
         return (
             
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled >    
-                <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 200, width:200}}></Image>       
+                <Image source={require('./pictures/joininglogowhite.png')} style={{height: 200, width:200}}></Image>       
                     <TextInput 
                     style={styles.input}
-                    label='Username'
+                    label='E-mail'
                     placeholder='user@gmail.com'
                     value={this.state.email}
                     onChangeText={email => this.setState({email})}></TextInput>
@@ -67,6 +97,13 @@ export default class SignUpForm extends React.Component{
                     placeholder='password'
                     value={this.state.password}
                     onChangeText={password => this.setState({password})}></TextInput>
+                    
+                    <TextInput 
+                    style={styles.input}
+                    label='username'
+                    placeholder='username'
+                    value={this.state.username}
+                    onChangeText={username => this.setState({username})}></TextInput>
 
                     <Text>{this.state.error}</Text>
 
@@ -76,6 +113,7 @@ export default class SignUpForm extends React.Component{
         );
     }
 
+    //Create loading effect when pressing sign up button
     renderButton(){
         if(this.state.loading){
             return <ActivityIndicator size='small'/>

@@ -1,5 +1,4 @@
-import React, { Component, TouchableOpacity } from 'react'
-import {Ionicons, FontAwesome, MaterialIcons, Entypo} from '@expo/vector-icons';
+import React, { Component} from 'react'
 
 import {
   DatePickerIOS,
@@ -15,7 +14,7 @@ import firebase from 'firebase'
 export default class CreateEventScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     headerTitle: (
-      <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+      <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
   ),
    headerStyle: {
       backgroundColor: '#22561e',
@@ -33,20 +32,45 @@ export default class CreateEventScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { chosenDate: new Date()  };
+    this.state = { 
+      chosenDate: new Date(),
+      username: '',
+      uid: firebase.auth().currentUser.uid
+    };
 
     this.setDate = this.setDate.bind(this);
+    //retrieves users to set current users, which will be used when creating event
+    firebase.database().ref('users/').once('value', (snapshot) => {
+      let data = snapshot.val();
+      let users = Object.values(data);
+      let uid = this.state.uid;
+      users.forEach(user => {
+          if(uid === user.uid){
+              this.state.username = user.username;
+          }
+      });
+    });
   }
-
+  //method to retrieve the date set in the DatePicker
   setDate(newDate) {
     this.setState({chosenDate: newDate})
   }
-
+  //method to create an event
   writeEvent(){
-    const attendees = [{}];
-    const decliners = [{}];
-    const comments = [{}];
+    const decliners = [{'username' : ''}];
+    const comments = [{'username':'', 'commentText':''}];
+    let owner = this.state.username;
+    const attendees = [{'username' : owner}];
+    const happening = true;
     const month = this.state.chosenDate.getMonth()+1;
+    let day = '';
+    let dayNow = this.state.chosenDate.getDate();
+    if (dayNow < 10){
+      day = '0' + dayNow;
+    }
+    else{
+      day = dayNow;
+    }
     let minutes = 0;
     if (this.state.chosenDate.getMinutes() < 10){
       minutes = '0' + this.state.chosenDate.getMinutes();
@@ -62,17 +86,19 @@ export default class CreateEventScreen extends Component {
       hours = this.state.chosenDate.getHours();
     }
     const eventDesc = this.state.eventDesc;
-    const eventDate = this.state.chosenDate.getDate() + '/' + month;
+    const eventDate = day + '/' + month;
     const eventTime = hours + ':' + minutes;
     
-
+    //creates the event in firebase
     firebase.database().ref('events/').push({
       eventDesc,
       eventDate,
       eventTime,
       attendees,
       decliners,
-      comments
+      comments,
+      owner,
+      happening
     }).then((data)=>{
       alert('Event created successfully');
     }).catch((error)=>{

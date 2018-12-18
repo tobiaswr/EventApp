@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator, Image, KeyboardAvoidingView, Keyboard} from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm'
 
 export default class SignInForm extends React.Component{
     static navigationOptions = {
         headerTitle: (
-          <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+          <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
         )
     };
     constructor(props) {
@@ -66,7 +66,7 @@ export default class SignInForm extends React.Component{
             return (
             
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled >    
-                <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 200, width:200}}></Image>       
+                <Image source={require('./pictures/joininglogowhite.png')} style={{height: 200, width:200}}></Image>       
                     <TextInput 
                     style={styles.input}
                     label='Username'

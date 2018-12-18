@@ -1,12 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, TextInput, View, Image, Button } from 'react-native';
 import firebase from 'firebase';
 
 
-export default class SettingsScreen extends React.Component {
+export default class SettingsScreen extends Component {
   static navigationOptions = {
         headerTitle: (
-        <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+        <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
     ),
      headerStyle: {
         backgroundColor: '#22561e',
@@ -22,14 +22,16 @@ export default class SettingsScreen extends React.Component {
      elevation: 4,
 
   };
+
     render() {
     return (
       <View style= {styles.container}>
-          <Button style= {styles.logOut} title= "Log Out" onPress = {() => {firebase.auth().signOut()}}>
+          <Button style= {styles.logOut} title= 'Log Out' onPress = {() => {firebase.auth().signOut()}}>
           </Button>
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({

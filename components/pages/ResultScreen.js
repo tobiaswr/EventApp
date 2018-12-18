@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import firebase from 'firebase';
 
 
-export default class SettingsScreen extends React.Component {
+export default class ResultScreen extends React.Component {
   static navigationOptions = {
         headerTitle: (
-        <Image source={require('./pictures/hangoutslogod8d8d8.png')} style={{height: 115, width:115}}/>
+        <Image source={require('./pictures/joininglogowhite.png')} style={{height: 115, width:115}}/>
     ),
      headerStyle: {
         backgroundColor: '#22561e',

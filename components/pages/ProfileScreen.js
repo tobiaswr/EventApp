@@ -1,101 +1,129 @@
-import React from 'react';
-import {StyleSheet, Text, View, Button, ImageBackground} from 'react-native';
-import {Ionicons} from '@expo/vector-icons';
+import React, { Component } from 'react';
+import firebase from 'firebase';
+import {StyleSheet, View, Text, ImageBackground, ScrollView} from 'react-native';
+import ItemComponent from './ItemComponent';
 
+export default class ProfileScreen extends React.Component{
+    static navigationOptions = ({navigation}) => ({
+        headerTitle: 'Profile',
+       headerStyle: {
+          backgroundColor: '#22561e',
+          shadowRadius: 4, 
+          shadowOpacity:0.7, 
+          shadowOffset: {
+            width: 1, 
+            height: 0
+          }, 
+          shadowColor: '#000000', 
+          elevation: 4,
+       },
+       headerTintColor: 'white',
+    
+    })
 
-var bgColor = this.backgColor;
+    constructor(props) {
+        super(props);
+        this.state = {
+          users: [],
+          uid: firebase.auth().currentUser.uid,
+          username: '',
+          events: [],
+          myEvents: [],
+        }
+        
+        
+    }
 
+    componentDidMount(){
+        firebase.database().ref('/events').on('value', (snapshot) => {
+            if(snapshot.val() != null){
+              let data = snapshot.val();
+              let eventkeys = Object.keys(data);
+              let events = Object.values(data);
+              let comments = [];
+              let i = 0;
+              events.forEach(event => {
+                event.id = eventkeys[i];
+                firebase.database().ref('/events/' + event.id + '/comments').on('value', (snapshot) => {
+                  let data = snapshot.val();
+                  comments = Object.values(data);
+                  const result = comments.filter(comment => comment.commentText.length >0);
+                  comments = result;
+  
+                });
+                firebase.database().ref('/events/' + event.id + '/attendees').on('value', (snapshot) => {
+                  let data = snapshot.val();
+                  attendees = Object.values(data);
+                });
+                firebase.database().ref('/events/' + event.id + '/decliners').on('value', (snapshot) => {
+                  let data = snapshot.val();
+                  decliners = Object.values(data);
+                  const filter = decliners.filter(decliner => decliner.username.length > 0);
+                  decliners = filter;
+                });
+                event.comments = comments;
+                event.attendees = attendees;
+                event.decliners = decliners;
+                i++;
+              })
+              this.setState({events});
 
-export default class DetailsScreen extends React.Component {
-    static navigationOptions = {
-        title: "Profile",
-        headerTitleStyle: {
-            fontSize: 18,
-         },
-         headerStyle: {
-            backgroundColor: '#22561e',
-            borderBottomColor: '#143311',
-             borderBottomWidth: 0,
-         },
-         headerTintColor: 'white'
-    };
+              firebase.database().ref('users/').once('value', (snapshot) => {
+                let data = snapshot.val();
+                let users = Object.values(data);
+                let uid = this.state.uid;
+                let myEvents = [];
+                users.forEach(user => {
+                    if(uid === user.uid){
+                        this.setState({username: user.username});
+                    }
+                });
+                this.state.events.forEach(event => {
+                    if(event.owner === this.state.username){
+                        myEvents.push(event);
+                    }
+                });
+                this.setState({myEvents});
+            });
+            }
+
+            
+        });
+      
+        
+    }
+
+    
 
     render() {
         return(
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            
-                <View style={styles.topBox}>
-                    <View style={styles.imageContainer}>
+            <View style={styles.container}>
+            {
+            <View style={{flex: 1, justifyContent: 'center'}}>
+                <View style={{height: '20%', backgroundColor: 'white', flexDirection: 'row'}}>
+                <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
+                style={{width: 75, height: 75, top: 10, left: 10}}
+                ></ImageBackground>
+                <Text style={{fontSize: 30, top: 20, left: 20}}>{this.state.username}</Text>
 
-                        <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
-                        style={styles.image} ></ImageBackground>
-                    </View>
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.name}>Name</Text>
-                        <View style={styles.rows}>
-                            <Ionicons name = 'md-at' size = {15} style= {styles.icons}></Ionicons>
-                            <Text style={styles.infoText}>Username</Text>
-                        </View>
-                        <View style={styles.rows}>
-                            <Ionicons name = 'md-compass' size = {15} style= {styles.icons}></Ionicons>                                       
-                            <Text style={styles.infoText}>Location</Text>
-                        </View> 
-                    </View>
 
                 </View>
-                <View style={styles.mainBox}>
-
+                <View style={{height: 25, backgroundColor: 'white', borderBottomWidth: 0.5, borderColor: '#22561e'}}>
+                <Text style={{fontSize: 25,bottom: 10}}>My events:</Text>
                 </View>
-            </View>
-        )
+                <ScrollView >
+                    ? <ItemComponent navigation={this.props.navigation} events={this.state.myEvents} style={{width: '100%'}}/>  
+                </ScrollView>
+            </View>     
+            }
+            </View>       
+        );
     }
 }
 
 const styles = StyleSheet.create({
-    topBox: {
-        width: '100%',
-        alignItems: 'center',
-        flex: 1,
-        backgroundColor: 'white',
-        borderBottomWidth: 1.5,
-        borderBottomColor: '#143311',
-
-    },
-    mainBox: {
-        width: '100%',
-        height: 385,
-    },
-    image: {
-        width: 100,
-        height: 100,
-
-    },
-    imageContainer: {
-        position: 'absolute',
-        left: 0, 
-        paddingLeft: 20,
-        paddingTop: 20,
-    },
-    infoContainer: {
-        position: 'absolute',
-        left: 0,
-        paddingLeft: 20,
-        paddingTop: 130,
-        flexDirection: 'column',
-    },
-    name: {
-        fontSize: 20,
-        fontWeight: 'bold',
-
-
-    },
-    rows: {
-       flexDirection: 'row',
-    },
-    icons: {
-        paddingRight: 2,
-
-
+    container: {
+      flex: 1,
+      justifyContent: 'center',
     }
-    
-});
+  })
