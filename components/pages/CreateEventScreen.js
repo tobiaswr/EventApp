@@ -49,7 +49,7 @@ export default class CreateEventScreen extends Component {
               this.state.username = user.username;
           }
       });
-  });
+    });
   }
   //method to retrieve the date set in the DatePicker
   setDate(newDate) {

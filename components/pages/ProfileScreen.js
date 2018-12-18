@@ -35,12 +35,6 @@ export default class ProfileScreen extends React.Component{
     }
 
     componentDidMount(){
-        firebase.database().ref('users/').once('value', (snapshot) => {
-            let data = snapshot.val();
-            let users = Object.values(data);
-            this.setState({users})            
-        });
-
         firebase.database().ref('/events').on('value', (snapshot) => {
             if(snapshot.val() != null){
               let data = snapshot.val();
@@ -73,33 +67,38 @@ export default class ProfileScreen extends React.Component{
                 i++;
               })
               this.setState({events});
+
+              firebase.database().ref('users/').once('value', (snapshot) => {
+                let data = snapshot.val();
+                let users = Object.values(data);
+                let uid = this.state.uid;
+                let myEvents = [];
+                users.forEach(user => {
+                    if(uid === user.uid){
+                        this.setState({username: user.username});
+                    }
+                });
+                this.state.events.forEach(event => {
+                    if(event.owner === this.state.username){
+                        myEvents.push(event);
+                    }
+                });
+                this.setState({myEvents});
+            });
             }
+
+            
         });
       
-        firebase.database().ref('users/').once('value', (snapshot) => {
-            let data = snapshot.val();
-            let users = Object.values(data);
-            let uid = this.state.uid;
-            users.forEach(user => {
-                if(uid === user.uid){
-                    this.setState({username: user.username});
-                }
-            });
-            this.state.events.forEach(event => {
-                if(event.owner === this.state.username){
-                    this.state.myEvents.push(event);
-                }
-            })
-        });
+        
     }
 
     
 
     render() {
-        
-
-        
         return(
+            <View style={styles.container}>
+            {
             <View style={{flex: 1, justifyContent: 'center'}}>
                 <View style={{height: '20%', backgroundColor: 'white', flexDirection: 'row'}}>
                 <ImageBackground source={{uri: 'https://static.thenounproject.com/png/363633-200.png'}}
@@ -110,12 +109,21 @@ export default class ProfileScreen extends React.Component{
 
                 </View>
                 <View style={{height: 25, backgroundColor: 'white', borderBottomWidth: 0.5, borderColor: '#22561e'}}>
-                <Text style={{fontSize: 25,}}>My events:</Text>
+                <Text style={{fontSize: 25,bottom: 10}}>My events:</Text>
                 </View>
                 <ScrollView >
                     ? <ItemComponent navigation={this.props.navigation} events={this.state.myEvents} style={{width: '100%'}}/>  
                 </ScrollView>
-            </View>            
+            </View>     
+            }
+            </View>       
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+    }
+  })

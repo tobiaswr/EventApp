@@ -21,6 +21,7 @@ const HomeStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   Profile: { screen: ProfileScreen},
+  ItemComponent: {screen: ItemComponent},
   Event: { screen: EventScreen},
 });
 
